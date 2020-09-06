@@ -72,7 +72,9 @@ const Navigation = ({
                   ) : (
                     <>
                       <button onClick={() => signInModalOpen()}>로그인</button>
-                      <button>회원가입</button>
+                      <button onClick={() => signUpModalOpen()}>
+                        회원가입
+                      </button>
                     </>
                   )}
                 </Grid>

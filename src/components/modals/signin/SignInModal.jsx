@@ -5,12 +5,23 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Typography } from '@material-ui/core';
 
 const SignInModal = ({ open, handleClose, signIn }) => {
   const [info, setInfo] = useState({
     email: '',
     password: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSignIn = async () => {
+    const { status } = await signIn(info);
+
+    if (status === 200) handleClose();
+    else {
+      setErrorMessage('아이디 또는 비밀번호를 확인해주세요');
+    }
+  };
 
   const onChangeInfo = e =>
     setInfo({ ...info, [e.target.type]: e.target.value });
@@ -37,15 +48,10 @@ const SignInModal = ({ open, handleClose, signIn }) => {
           onChange={onChangeInfo}
           fullWidth
         />
+        <span>{errorMessage}</span>
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={() => {
-            signIn(info);
-            handleClose();
-          }}
-          color="primary"
-        >
+        <Button onClick={handleSignIn} color="primary">
           로그인
         </Button>
       </DialogActions>

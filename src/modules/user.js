@@ -52,10 +52,12 @@ const signIn = userData => {
       const { user_id, token } = data;
       dispatch(signInSuccess(user_id));
       localStorage.setItem('authorization', token);
+      return { status };
     } catch (error) {
-      const { status, statusText } = error.response;
-      console.log(status, statusText);
+      const { status } = error.response;
+      console.log(error.response);
       dispatch(signInFailure());
+      return { status };
     }
   };
 };
@@ -70,10 +72,11 @@ const signUp = userData => {
       );
       console.log(data, status);
       dispatch(signUpSuccess());
+      return { status };
     } catch (error) {
-      const { status, statusText } = error.response;
-      console.log(status, statusText);
+      const { status, data } = error.response;
       dispatch(signUpFailure());
+      return { status, data };
     }
   };
 };
@@ -84,7 +87,6 @@ const signOut = () => {
 
     try {
       const token = localStorage.getItem('authorization');
-      console.log(token);
       localStorage.removeItem('authorization');
       const result = await axios.post(
         `${BASE_URL}/logout/`,
@@ -120,7 +122,7 @@ const userReducer = handleActions(
       id: action.payload,
     }),
     [SIGNIN_FAILURE]: (prevState, action) => ({
-      isSignIn: true,
+      isSignIn: false,
       isLoading: false,
       id: -1,
     }),
@@ -133,10 +135,10 @@ const userReducer = handleActions(
       ...prevState,
       isLoading: false,
     }),
-    [SIGNIN_FAILURE]: (prevState, action) => ({
+    [SIGNUP_FAILURE]: (prevState, action) => ({
       ...prevState,
       isSignIn: false,
-      isLoading: true,
+      isLoading: false,
     }),
     //.. signout
     [SIGNOUT_REQUEST]: (prevState, action) => ({
