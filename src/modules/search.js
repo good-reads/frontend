@@ -27,15 +27,15 @@ const searchBookSuccess = createAction(SEARCH_BOOK_SUCCESS, books => books);
 const searchBookFailure = createAction(SEARCH_BOOK_FAILURE);
 
 // action creator(async)
-const searchBooks = (keyword, authorization) => {
+const searchBooks = keyword => {
+  const token = localStorage.getItem('authorization');
   const findBy = async key =>
     axios(`${BASE_URL}/`, {
       params: {
         [key]: keyword,
       },
       headers: {
-        Authorization:
-          'Token f02dea7610ea06ff36161cc66d664d9e32ab6bcf4d19b3b9030269ba6b083aad',
+        Authorization: `Token ${token}`,
       },
     });
 
