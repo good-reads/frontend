@@ -25,6 +25,7 @@ const SIGNUP_FAILURE = 'user/SIGNUP_FAILURE';
 //..signout
 const SIGNOUT_REQUEST = 'user/SIGNOUT_REQUEST';
 const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
+const SIGNOUT_FAILURE = 'user/SIGNOUT_FAILURE';
 
 // action creator(sync)
 //..signin
@@ -40,6 +41,7 @@ const signUpFailure = createAction(SIGNUP_FAILURE);
 //..signout
 const signOutRequest = createAction(SIGNOUT_REQUEST);
 const signOutSuccess = createAction(SIGNOUT_SUCCESS);
+const signOutFailure = createAction(SIGNOUT_FAILURE);
 
 // action creator(async)
 const signIn = userData => {
@@ -79,9 +81,26 @@ const signUp = userData => {
 const signOut = () => {
   return async (dispatch, getState) => {
     dispatch(signOutRequest());
-    setTimeout(() => {
+
+    try {
+      const token = localStorage.getItem('authorization');
+      console.log(token);
+      localStorage.removeItem('authorization');
+      const result = await axios.post(
+        `${BASE_URL}/logout/`,
+        {},
+        {
+          headers: {
+            Authorization: 'Token ' + token,
+          },
+        }
+      );
       dispatch(signOutSuccess());
-    }, 500);
+      console.log(result);
+    } catch (error) {
+      dispatch(signOutFailure());
+      console.log(error);
+    }
   };
 };
 
@@ -129,6 +148,12 @@ const userReducer = handleActions(
     [SIGNOUT_SUCCESS]: (prevState, action) => ({
       ...prevState,
       isLoading: false,
+    }),
+    [SIGNOUT_FAILURE]: (prevState, action) => ({
+      ...prevState,
+      isSignIn: false,
+      isLoading: false,
+      id: -1,
     }),
   },
   initialState
