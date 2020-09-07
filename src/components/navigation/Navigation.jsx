@@ -9,6 +9,7 @@ import SignInModal from '../modals/signin/SignInModal';
 import SignUpModal from '../modals/signup/SignUpModal';
 
 const Navigation = ({
+  thumbnail,
   isSignIn,
   isLoading,
   signIn,
@@ -55,7 +56,7 @@ const Navigation = ({
                   ) : (
                     <>
                       <button onClick={() => signOut()}>로그아웃</button>
-                      <button>프로필 사진</button>
+                      <Picture thumbnail={thumbnail} />
                     </>
                   )}
                 </Grid>
