@@ -12,7 +12,7 @@ import {
 } from '../../../modules/modal';
 
 const NavigationContainer = () => {
-  const { isSignIn, isLoading } = useSelector(({ user }) => user);
+  const { isSignIn, isLoading, informations } = useSelector(({ user }) => user);
   const { signUpIsOpen, signInIsOpen } = useSelector(({ modal }) => modal);
 
   const [
@@ -38,6 +38,7 @@ const NavigationContainer = () => {
 
   return (
     <Navigation
+      thumbnail={informations.thumbnail}
       isSignIn={isSignIn}
       isLoading={isLoading}
       signIn={onSignIn}

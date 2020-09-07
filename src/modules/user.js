@@ -8,7 +8,11 @@ const BASE_URL =
 const initialState = {
   isSignIn: false,
   isLoading: false,
-  id: -1,
+  informations: {
+    id: -1,
+    name: '',
+    thumbnail: '',
+  },
 };
 
 // action type
@@ -48,9 +52,20 @@ const signIn = userData => {
   return async (dispatch, getState) => {
     dispatch(signInRequest());
     try {
-      const { data, status } = await axios.post(`${BASE_URL}/login/`, userData);
-      const { user_id, token } = data;
-      dispatch(signInSuccess(user_id));
+      const loginRequestResult = await axios.post(
+        `${BASE_URL}/login/`,
+        userData
+      );
+      const { data, status } = loginRequestResult;
+      const { token } = data;
+
+      const userInformations = await axios.get(`${BASE_URL}/account/get/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      const { name, thumbnail, id } = userInformations.data;
+      dispatch(signInSuccess({ id, name, thumbnail }));
       localStorage.setItem('authorization', token);
       return { status };
     } catch (error) {
@@ -119,12 +134,12 @@ const userReducer = handleActions(
       ...prevState,
       isSignIn: true,
       isLoading: false,
-      id: action.payload,
+      informations: action.payload,
     }),
     [SIGNIN_FAILURE]: (prevState, action) => ({
+      ...prevState,
       isSignIn: false,
       isLoading: false,
-      id: -1,
     }),
     //.. signup
     [SIGNUP_REQUEST]: (prevState, action) => ({
@@ -143,9 +158,13 @@ const userReducer = handleActions(
     //.. signout
     [SIGNOUT_REQUEST]: (prevState, action) => ({
       ...prevState,
-      id: -1,
       isLoading: true,
       isSignIn: false,
+      informations: {
+        id: -1,
+        name: '',
+        thumbnail: '',
+      },
     }),
     [SIGNOUT_SUCCESS]: (prevState, action) => ({
       ...prevState,
@@ -155,7 +174,6 @@ const userReducer = handleActions(
       ...prevState,
       isSignIn: false,
       isLoading: false,
-      id: -1,
     }),
   },
   initialState
