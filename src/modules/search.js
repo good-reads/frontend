@@ -68,7 +68,7 @@ const searchBooks = keyword => {
   };
 };
 
-export { searchBooks };
+export { updateSearchKeyword, searchBooks };
 
 // reducer
 const searchReducer = handleActions(

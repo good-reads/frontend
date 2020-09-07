@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
-const Search = ({ isLoading, searchBooks }) => {
+const Search = ({ isLoading, searchBooks, updateSearchKeyword, history }) => {
   const [keyword, setKeyword] = useState('');
   const handleSearch = e => {
     e.preventDefault();
     searchBooks(keyword);
-    console.log(isLoading);
+    updateSearchKeyword(keyword);
+    history.push('/search');
   };
   return (
     <form onSubmit={handleSearch}>
@@ -15,8 +17,9 @@ const Search = ({ isLoading, searchBooks }) => {
         value={keyword}
         onChange={e => setKeyword(e.target.value)}
       />
+      {isLoading && '로딩중...'}
     </form>
   );
 };
 
-export default Search;
+export default withRouter(Search);
