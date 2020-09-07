@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 // intial state
 const initialState = {
   signUpIsOpen: false,
-  signInIsOpen: true,
+  signInIsOpen: false,
 };
 
 // action type
