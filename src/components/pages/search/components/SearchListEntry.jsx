@@ -1,9 +1,16 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-const SearchListEntry = ({ book }) => {
-  const { author, cover, title } = book;
+const SearchListEntry = ({ book, history }) => {
+  const { author, cover, title, isbn } = book;
+  const showDetail = () => {
+    history.push({
+      pathname: '/detail',
+      state: { isbn },
+    });
+  };
   return (
-    <div>
+    <div onClick={showDetail}>
       <div>
         <img src={cover} alt={`${title} 사진`} />
       </div>
@@ -16,4 +23,4 @@ const SearchListEntry = ({ book }) => {
   );
 };
 
-export default SearchListEntry;
+export default withRouter(SearchListEntry);
