@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Shelves from './components/Shelves';
+
 const MyPage = () => {
-  return <div>MyPage</div>;
+  return (
+    <div>
+      <Shelves />
+    </div>
+  );
 };
 
 export default MyPage;
