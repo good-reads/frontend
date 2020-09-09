@@ -64,8 +64,9 @@ const signIn = userData => {
           Authorization: `Token ${token}`,
         },
       });
-      const { name, thumbnail, id } = userInformations.data;
+      const { name, thumbnail, id, booklist } = userInformations.data;
       dispatch(signInSuccess({ id, name, thumbnail }));
+      localStorage.setItem('shelves', JSON.stringify(booklist));
       localStorage.setItem('authorization', token);
       return { status };
     } catch (error) {
