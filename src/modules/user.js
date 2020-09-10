@@ -9,7 +9,6 @@ const initialState = {
   isSignIn: false,
   isLoading: false,
   informations: {
-    id: -1,
     name: '',
     thumbnail: '',
   },
@@ -34,7 +33,7 @@ const SIGNOUT_FAILURE = 'user/SIGNOUT_FAILURE';
 // action creator(sync)
 //..signin
 const signInRequest = createAction(SIGNIN_REQUEST);
-const signInSuccess = createAction(SIGNIN_SUCCESS, id => id);
+const signInSuccess = createAction(SIGNIN_SUCCESS);
 const signInFailure = createAction(SIGNIN_FAILURE);
 
 //..signup
@@ -65,7 +64,8 @@ const signIn = userData => {
         },
       });
       const { name, thumbnail, id, booklist } = userInformations.data;
-      dispatch(signInSuccess({ id, name, thumbnail }));
+      localStorage.setItem('userId', id);
+      dispatch(signInSuccess({ name, thumbnail }));
       localStorage.setItem('shelves', JSON.stringify(booklist));
       localStorage.setItem('authorization', token);
       return { status };
@@ -162,7 +162,6 @@ const userReducer = handleActions(
       isLoading: true,
       isSignIn: false,
       informations: {
-        id: -1,
         name: '',
         thumbnail: '',
       },
