@@ -166,7 +166,7 @@ const BookDetail = ({ info }) => {
         </div>
         <ul>
           {detail.reviews.map(review => (
-            <ReviewEntry key={review.id} review={review} />
+            <ReviewEntry key={review.id} review={review} isbn={isbn} />
           ))}
         </ul>
       </div>
