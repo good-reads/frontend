@@ -10,7 +10,7 @@ const BASE_URL =
 
 const BookDetail = ({ info }) => {
   // 책 1권에 대한 모든 정보 받아오는 api 사용하기
-
+  const token = localStorage.getItem('authorization');
   const { isbn } = info;
   console.log('ISBN::', isbn);
   const [likeStars, setLikeStars] = useState([
@@ -96,8 +96,6 @@ const BookDetail = ({ info }) => {
   const submitRate = async idx => {
     updateLikeStars(idx);
 
-    const token = localStorage.getItem('authorization');
-
     const result = await axios.put(
       `${BASE_URL}/create/rate/`,
       { book_isbn: isbn, score: idx + 1, user: 13 },
@@ -109,8 +107,26 @@ const BookDetail = ({ info }) => {
     console.log(result);
   };
 
-  const handleReview = e => {
+  const handleReview = async e => {
     e.preventDefault();
+
+    try {
+      const { data, status } = await axios({
+        url: `${BASE_URL}/create/review/`,
+        method: 'PUT',
+        data: {
+          book: isbn,
+          content: review,
+        },
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      setReview('');
+      getBookData();
+    } catch (error) {
+      console.log(error);
+    }
 
     console.log('hi');
   };
