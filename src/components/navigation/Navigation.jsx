@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 import Logo from './components/Logo';
 import Title from './components/Title';
@@ -21,8 +22,14 @@ const Navigation = ({
   signUpModalClose,
   signInModalOpen,
   signInModalClose,
+  history,
 }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const handleSignOut = () => {
+    signOut();
+    history.push('/');
+  };
 
   return (
     <div>
@@ -55,7 +62,7 @@ const Navigation = ({
                     <span>로딩중...</span>
                   ) : (
                     <>
-                      <button onClick={() => signOut()}>로그아웃</button>
+                      <button onClick={() => handleSignOut()}>로그아웃</button>
                       <Picture thumbnail={thumbnail} />
                     </>
                   )}
@@ -102,4 +109,4 @@ const Navigation = ({
   );
 };
 
-export default Navigation;
+export default withRouter(Navigation);
