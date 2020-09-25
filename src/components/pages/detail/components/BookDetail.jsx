@@ -98,7 +98,7 @@ const BookDetail = ({ info }) => {
 
     const result = await axios.put(
       `${BASE_URL}/create/rate/`,
-      { book_isbn: isbn, score: idx + 1, user: 13 },
+      { book_isbn: isbn, score: idx + 1 },
       {
         headers: { Authorization: `Token ${token}` },
       }

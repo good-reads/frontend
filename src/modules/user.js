@@ -1,6 +1,8 @@
 import { handleActions, createAction } from 'redux-actions';
 import axios from 'axios';
 
+import { shelfActions } from './shelf';
+
 const BASE_URL =
   'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api/accounts/auth';
 
@@ -66,7 +68,7 @@ const signIn = userData => {
       const { name, thumbnail, id, booklist } = userInformations.data;
       localStorage.setItem('userId', id);
       dispatch(signInSuccess({ name, thumbnail }));
-      localStorage.setItem('shelves', JSON.stringify(booklist));
+      dispatch(shelfActions.setShelves(booklist));
       localStorage.setItem('authorization', token);
       return { status };
     } catch (error) {
@@ -81,6 +83,7 @@ const signIn = userData => {
 const signUp = userData => {
   return async (dispatch, getState) => {
     dispatch(signUpRequest());
+    console.log('try signup: ', userData);
     try {
       const { data, status } = await axios.post(
         `${BASE_URL}/register/`,
