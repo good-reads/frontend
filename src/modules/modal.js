@@ -5,7 +5,7 @@ import { createAction, handleActions } from 'redux-actions';
 const initialState = {
   signUpIsOpen: false,
   signInIsOpen: false,
-  addShelfIsOpen: true,
+  addShelfIsOpen: false,
 };
 
 // action type

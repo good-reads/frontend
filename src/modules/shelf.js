@@ -2,7 +2,6 @@ import { handleActions, createAction } from 'redux-actions';
 import { put, takeLatest, delay, call } from 'redux-saga/effects';
 
 import * as shelfApi from '../api/shelf';
-import { modalActions } from './modal';
 
 // initial state
 const initialState = {
@@ -11,7 +10,7 @@ const initialState = {
 };
 
 // action type
-const SET_SHELVES = 'shelves/SET_SHELVES';
+export const SET_SHELVES = 'shelves/SET_SHELVES';
 const ADD_SHELF = 'shelves/ADD_SHELF';
 const ADD_SHELF_SUCCESS = 'shelves/ADD_SHELF_SUCCESS';
 const ADD_SHELF_FAILURE = 'shelves/ADD_SHELF_FAILURE';

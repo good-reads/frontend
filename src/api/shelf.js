@@ -3,8 +3,6 @@ import axios from 'axios';
 const BASE_URL =
   'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api';
 
-// export const getShelves = async (authorization)=>
-
 export const addNewShelf = async (authorization, list_name) =>
   await axios({
     url: `${BASE_URL}/accounts/list/create/`,

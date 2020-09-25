@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Typography } from '@material-ui/core';
 
 const SignInModal = ({ open, handleClose, signIn }) => {
   const [info, setInfo] = useState({
     email: '',
     password: '',
   });
+  const { error } = useSelector(({ user }) => user);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSignIn = async () => {
-    const { status } = await signIn(info);
-
-    if (status === 200) handleClose();
-    else {
-      setErrorMessage('아이디 또는 비밀번호를 확인해주세요');
-    }
+    const result = await signIn(info);
   };
 
   const onChangeInfo = e =>
@@ -48,7 +44,7 @@ const SignInModal = ({ open, handleClose, signIn }) => {
           onChange={onChangeInfo}
           fullWidth
         />
-        <span>{errorMessage}</span>
+        <span>{error}</span>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleSignIn} color="primary">

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import NavigationContainer from './components/navigation/containers/NavigationContainer';
 import MainPage from './components/pages/main/MainPage';
@@ -9,8 +10,13 @@ import NewBookPage from './components/pages/new-book/NewBookPage';
 import MyPage from './components/pages/my-page/MyPage';
 import ListPage from './components/pages/list/ListPage';
 import './css/reset.css';
+import { maintain } from './modules/user';
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(maintain());
+  }, [dispatch]);
   return (
     <div>
       <Router>
