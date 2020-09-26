@@ -5,6 +5,7 @@ import searchReducer from './search';
 import modalReducer from './modal';
 import shelfReducer, { shelfSaga } from './shelf';
 import bookReducer, { bookSaga } from './book';
+import tabReducer from './tab';
 
 export default combineReducers({
   user: userReducer,
@@ -12,6 +13,7 @@ export default combineReducers({
   modal: modalReducer,
   shelf: shelfReducer,
   book: bookReducer,
+  tab: tabReducer,
 });
 
 export function* rootSaga() {

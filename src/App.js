@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import NavigationContainer from './components/navigation/containers/NavigationContainer';
+import MyPageTab from './components/tabs/MyPageTab';
 import MainPage from './components/pages/main/MainPage';
 import SearchPage from './components/pages/search/SearchPage';
 import DetailPage from './components/pages/detail/DetailPage';
@@ -50,6 +51,7 @@ const App = () => {
             />
           </Route>
           <Route path="/mypage" exact>
+            <MyPageTab />
             <MyPage />
           </Route>
           <Route path="/list" exact>

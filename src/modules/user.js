@@ -13,14 +13,20 @@ const BASE_URL =
 const initialState = {
   isSignIn: false,
   isLoading: false,
-  informations: {
-    name: '',
-    thumbnail: '',
-  },
+  informations: {},
   error: '',
 };
 
 // action type
+//.. reset-error-message
+const RESET_ERROR_MESSAGE = 'user/RESET_ERROR_MESSAGE';
+
+//.. update-profile
+const UPDATE_PROFILE = 'user/UPDATE_PROFILE';
+const UPDATE_PROFILE_SUCCESS = 'user/UPDATE_PROFILE_SUCCESS';
+const UPDATE_PROFILE_FAILURE = 'user/UPDATE_PROFILE_FAILURE';
+
+//.. maintain
 const MAINTAIN = 'user/MAINTAIN';
 const MAINTAIN_SUCCESS = 'user/MAINTAIN_SUCCESS';
 const MAINTAIN_FAILURE = 'user/MAINTAIN_FAILURE';
@@ -41,13 +47,20 @@ const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
 const SIGNOUT_FAILURE = 'user/SIGNOUT_FAILURE';
 
 // action creator(sync)
-export const signIn = createAction(SIGNIN);
-const signInSuccess = createAction(SIGNIN_SUCCESS);
-const signInFailure = createAction(SIGNIN_FAILURE);
+export const resetErrorMessage = createAction(RESET_ERROR_MESSAGE);
 
+//.. update-profile
+export const updateProfile = createAction(UPDATE_PROFILE);
+
+//.. maintain
 export const maintain = createAction(MAINTAIN);
 const maintainSuccess = createAction(MAINTAIN_SUCCESS);
 const maintainFailure = createAction(MAINTAIN_FAILURE);
+
+//.. signin
+export const signIn = createAction(SIGNIN);
+const signInSuccess = createAction(SIGNIN_SUCCESS);
+const signInFailure = createAction(SIGNIN_FAILURE);
 
 //..signup
 const signUpRequest = createAction(SIGNUP_REQUEST);
@@ -59,13 +72,35 @@ const signOutRequest = createAction(SIGNOUT_REQUEST);
 const signOutSuccess = createAction(SIGNOUT_SUCCESS);
 const signOutFailure = createAction(SIGNOUT_FAILURE);
 
+function* updateProfileSaga(action) {
+  const authorization = localStorage.getItem('authorization');
+  const { thumbnail, email, name } = action.payload;
+  try {
+    const formData = new FormData();
+    thumbnail && formData.append('thumbnail', thumbnail[0]);
+    email && formData.append('email', email);
+    name && formData.append('name', name);
+    const { data } = yield call(userApi.updateProfile, authorization, formData);
+    yield put({
+      type: UPDATE_PROFILE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const { data } = error.response;
+    yield put({
+      type: UPDATE_PROFILE_FAILURE,
+      payload: data[Object.keys(data)[0]][0],
+    });
+  }
+}
+
 function* maintainSaga() {
   const authorization = localStorage.getItem('authorization');
   try {
     const {
-      data: { booklist, name, thumbnail },
+      data: { booklist, name, thumbnail, email },
     } = yield call(userApi.getUserInfo, authorization);
-    yield put(maintainSuccess(name, thumbnail));
+    yield put(maintainSuccess({ name, thumbnail, email }));
     yield put(shelfActions.setShelves(booklist));
   } catch (error) {
     yield put(maintainFailure(error.response.statusText));
@@ -79,10 +114,10 @@ function* signInSaga(action) {
     } = yield call(userApi.signIn, action.payload);
 
     const {
-      data: { name, thumbnail, booklist },
+      data: { name, thumbnail, booklist, email },
     } = yield call(userApi.getUserInfo, token);
     yield put(shelfActions.setShelves(booklist));
-    yield put(signInSuccess({ name, thumbnail }));
+    yield put(signInSuccess({ name, thumbnail, email }));
     yield put(modalActions.setState({ signInIsOpen: false }));
     localStorage.setItem('authorization', token);
   } catch (error) {
@@ -93,18 +128,17 @@ function* signInSaga(action) {
 export function* userSaga() {
   yield takeLatest(SIGNIN, signInSaga);
   yield takeLatest(MAINTAIN, maintainSaga);
+  yield takeLatest(UPDATE_PROFILE, updateProfileSaga);
 }
 
 export const signUp = userData => {
   return async (dispatch, getState) => {
     dispatch(signUpRequest());
-    console.log('try signup: ', userData);
     try {
       const { data, status } = await axios.post(
         `${BASE_URL}/register/`,
         userData
       );
-      console.log(data, status);
       dispatch(signUpSuccess());
       return { status };
     } catch (error) {
@@ -143,6 +177,23 @@ export const signOut = () => {
 // reducer
 const userReducer = handleActions(
   {
+    //.. reset-error-message
+    [RESET_ERROR_MESSAGE]: (prevState, action) => ({
+      ...prevState,
+      error: '',
+    }),
+    //.. update-profile
+    [UPDATE_PROFILE_SUCCESS]: (prevState, action) => ({
+      ...prevState,
+      informations: {
+        ...prevState.informations,
+        ...action.payload,
+      },
+    }),
+    [UPDATE_PROFILE_FAILURE]: (prevState, action) => ({
+      ...prevState,
+      error: action.payload,
+    }),
     //.. maintain
     [MAINTAIN_SUCCESS]: (prevState, action) => ({
       ...prevState,
@@ -158,12 +209,12 @@ const userReducer = handleActions(
     [SIGNIN]: (prevState, action) => ({
       ...prevState,
       isLoading: true,
-      informations: action.payload,
     }),
     [SIGNIN_SUCCESS]: (prevState, action) => ({
       ...prevState,
       isSignIn: true,
       isLoading: false,
+      informations: action.payload,
       error: '',
     }),
     [SIGNIN_FAILURE]: (prevState, action) => ({
