@@ -6,6 +6,7 @@ const initialState = {
   signUpIsOpen: false,
   signInIsOpen: false,
   addShelfIsOpen: false,
+  addNewBookIsOpen: true,
 };
 
 // action type
