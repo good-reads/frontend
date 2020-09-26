@@ -4,6 +4,7 @@ import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import ReviewEntry from './ReviewEntry';
+import AddBookToShelf from './AddBookToShelf';
 
 const BASE_URL =
   'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api/books';
@@ -12,7 +13,6 @@ const BookDetail = ({ info }) => {
   // 책 1권에 대한 모든 정보 받아오는 api 사용하기
   const token = localStorage.getItem('authorization');
   const { isbn } = info;
-  console.log('ISBN::', isbn);
   const [likeStars, setLikeStars] = useState([
     false,
     false,
@@ -98,7 +98,7 @@ const BookDetail = ({ info }) => {
 
     const result = await axios.put(
       `${BASE_URL}/create/rate/`,
-      { book_isbn: isbn, score: idx + 1, user: 13 },
+      { book_isbn: isbn, score: idx + 1 },
       {
         headers: { Authorization: `Token ${token}` },
       }
@@ -142,7 +142,7 @@ const BookDetail = ({ info }) => {
         <h3>{detail.pubdate}</h3>
         <p>{detail.description}</p>
       </div>
-      <button>+</button>
+      <AddBookToShelf isbn={isbn} />
       <div>
         <h1>리뷰</h1>
         <div>

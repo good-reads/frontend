@@ -24,7 +24,7 @@ const SignUpModal = ({ open, handleClose, signUp }) => {
 
   const handleSignUp = async () => {
     const { status, data } = await signUp(info);
-    if (status === 200) {
+    if (status === 201) {
       handleClose();
     } else {
       const { name, email, password } = data;
@@ -37,7 +37,7 @@ const SignUpModal = ({ open, handleClose, signUp }) => {
   };
 
   useEffect(() => {
-    console.log('hi>>', errorMessages);
+    console.log('signup error>>', errorMessages);
   }, [errorMessages]);
 
   return (

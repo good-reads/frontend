@@ -4,35 +4,14 @@ import useActions from '../../../lib/useActions';
 
 import Navigation from '../Navigation';
 import { signIn, signUp, signOut } from '../../../modules/user';
-import {
-  signUpModalOpen,
-  signUpModalClose,
-  signInModalOpen,
-  signInModalClose,
-} from '../../../modules/modal';
+import { modalActions } from '../../../modules/modal';
 
 const NavigationContainer = () => {
   const { isSignIn, isLoading, informations } = useSelector(({ user }) => user);
   const { signUpIsOpen, signInIsOpen } = useSelector(({ modal }) => modal);
 
-  const [
-    onSignIn,
-    onSignUp,
-    onSignOut,
-    onSignUpModalOpen,
-    onSignUpModalClose,
-    onSignInModalOpen,
-    onSignInModalClose,
-  ] = useActions(
-    [
-      signIn,
-      signUp,
-      signOut,
-      signUpModalOpen,
-      signUpModalClose,
-      signInModalOpen,
-      signInModalClose,
-    ],
+  const [onSignIn, onSignUp, onSignOut, onUpdateModalState] = useActions(
+    [signIn, signUp, signOut, modalActions.setState],
     []
   );
 
@@ -46,10 +25,7 @@ const NavigationContainer = () => {
       signOut={onSignOut}
       signInIsOpen={signInIsOpen}
       signUpIsOpen={signUpIsOpen}
-      signUpModalOpen={onSignUpModalOpen}
-      signUpModalClose={onSignUpModalClose}
-      signInModalOpen={onSignInModalOpen}
-      signInModalClose={onSignInModalClose}
+      updateModalState={onUpdateModalState}
     />
   );
 };

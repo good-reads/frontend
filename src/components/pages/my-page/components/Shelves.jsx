@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import Shelf from './Shelf';
 
 const Shelves = () => {
-  const shelves = useRef(JSON.parse(localStorage.getItem('shelves')));
-  console.log('>>shelves', shelves);
+  const { shelves } = useSelector(({ shelf }) => shelf);
   return (
     <div>
       <h1>나의 서재</h1>
-      {shelves.current.map(info => (
-        <Shelf key={info.id} info={info} />
+      {Object.keys(shelves).map(id => (
+        <Shelf key={shelves[id].id} info={shelves[id]} />
       ))}
     </div>
   );

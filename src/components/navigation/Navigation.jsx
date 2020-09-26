@@ -18,10 +18,7 @@ const Navigation = ({
   signOut,
   signInIsOpen,
   signUpIsOpen,
-  signUpModalOpen,
-  signUpModalClose,
-  signInModalOpen,
-  signInModalClose,
+  updateModalState,
   history,
 }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -79,8 +76,14 @@ const Navigation = ({
                     <span>로딩중...</span>
                   ) : (
                     <>
-                      <button onClick={() => signInModalOpen()}>로그인</button>
-                      <button onClick={() => signUpModalOpen()}>
+                      <button
+                        onClick={() => updateModalState({ signInIsOpen: true })}
+                      >
+                        로그인
+                      </button>
+                      <button
+                        onClick={() => updateModalState({ signUpIsOpen: true })}
+                      >
                         회원가입
                       </button>
                     </>
@@ -94,14 +97,14 @@ const Navigation = ({
       {signInIsOpen && (
         <SignInModal
           open={signInIsOpen}
-          handleClose={signInModalClose}
+          handleClose={() => updateModalState({ signInIsOpen: false })}
           signIn={signIn}
         />
       )}
       {signUpIsOpen && (
         <SignUpModal
           open={signUpIsOpen}
-          handleClose={signUpModalClose}
+          handleClose={() => updateModalState({ signUpIsOpen: false })}
           signUp={signUp}
         />
       )}
