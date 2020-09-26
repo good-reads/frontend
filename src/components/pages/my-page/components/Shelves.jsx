@@ -8,8 +8,8 @@ const Shelves = () => {
   return (
     <div>
       <h1>나의 서재</h1>
-      {shelves.map(info => (
-        <Shelf key={info.id} info={info} />
+      {Object.keys(shelves).map(idx => (
+        <Shelf key={shelves[idx].id} info={shelves[idx]} />
       ))}
     </div>
   );

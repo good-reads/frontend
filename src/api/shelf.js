@@ -14,3 +14,31 @@ export const addNewShelf = async (authorization, list_name) =>
       Authorization: `Token ${authorization}`,
     },
   });
+
+export const addBookToShelf = async (authorization, list_id, isbn) =>
+  await axios({
+    url: `${BASE_URL}/accounts/list/edit/`,
+    method: 'PUT',
+    data: {
+      type: 'ADD',
+      list_id,
+      booklist: [isbn],
+    },
+    headers: {
+      Authorization: `Token ${authorization}`,
+    },
+  });
+
+export const removeBookFromShelf = async (authorization, list_id, isbn) =>
+  await axios({
+    url: `${BASE_URL}/accounts/list/edit/`,
+    method: 'PUT',
+    data: {
+      type: 'SUB',
+      list_id,
+      booklist: [isbn],
+    },
+    headers: {
+      Authorization: `Token ${authorization}`,
+    },
+  });

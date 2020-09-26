@@ -2,7 +2,7 @@ import { handleActions, createAction } from 'redux-actions';
 import { put, takeLatest, delay, call } from 'redux-saga/effects';
 import axios from 'axios';
 
-import { SET_SHELVES } from './shelf';
+import { shelfActions } from './shelf';
 import { modalActions } from './modal';
 import * as userApi from '../api/user';
 
@@ -79,10 +79,7 @@ function* maintainSaga() {
       data: { booklist, name, thumbnail },
     } = yield call(userApi.getUserInfo, authorization);
     yield put(maintainSuccess(name, thumbnail));
-    yield put({
-      type: SET_SHELVES,
-      payload: booklist,
-    });
+    yield put(shelfActions.setShelves(booklist));
   } catch (error) {
     yield put(maintainFailure(error.response));
   }
@@ -97,10 +94,7 @@ function* signInSaga(action) {
     const {
       data: { name, thumbnail, booklist },
     } = yield call(userApi.getUserInfo, token);
-    yield put({
-      type: SET_SHELVES,
-      payload: booklist,
-    });
+    yield put(shelfActions.setShelves(booklist));
     yield put(signInSuccess({ name, thumbnail }));
     yield put(modalActions.setState({ signInIsOpen: false }));
     localStorage.setItem('authorization', token);
