@@ -74,7 +74,7 @@ const signOutFailure = createAction(SIGNOUT_FAILURE);
 
 function* updateProfileSaga(action) {
   const authorization = localStorage.getItem('authorization');
-  const { thumbnail, email, name } = action.payload;
+  const { thumbnail, email, name, cb } = action.payload;
   try {
     const formData = new FormData();
     thumbnail && formData.append('thumbnail', thumbnail[0]);
@@ -85,6 +85,7 @@ function* updateProfileSaga(action) {
       type: UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
+    cb();
   } catch (error) {
     const { data } = error.response;
     yield put({

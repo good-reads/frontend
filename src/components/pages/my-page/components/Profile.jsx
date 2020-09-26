@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateProfile, resetErrorMessage } from '../../../../modules/user';
@@ -10,19 +10,22 @@ const Modify = ({ keyword, start }) => {
   const [isReadyToSave, setIsReadyToSave] = useState(false);
   const [modifyData, setModifyData] = useState(start);
 
-  useEffect(() => {
-    dispatch(resetErrorMessage());
-  }, [dispatch]);
-
   const onChangeModifydata = e => {
     setModifyData(e.target.value);
   };
 
   const handleModify = () => {
     if (isReadyToSave) {
-      dispatch(updateProfile({ [keyword]: modifyData }));
+      dispatch(
+        updateProfile({
+          [keyword]: modifyData,
+          cb: () => setIsReadyToSave(false),
+        })
+      );
+    } else {
+      dispatch(resetErrorMessage());
+      setIsReadyToSave(true);
     }
-    setIsReadyToSave(!isReadyToSave);
   };
 
   return (
