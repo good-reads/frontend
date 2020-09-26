@@ -1,54 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Book from './Book';
+import { shelfActions } from '../../../../modules/shelf';
 
-const BASE_URL =
-  'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api/accounts/list';
-const token = localStorage.getItem('authorization');
-
-const Books = ({ list_id, booklist }) => {
-  const [books, setBooks] = useState([...booklist]);
-
-  useEffect(() => {
-    console.log('hi');
-  }, [books]);
+const Books = ({ list_id }) => {
+  const dispatch = useDispatch();
+  const { shelves } = useSelector(({ shelf }) => shelf);
 
   const deleteBook = async isbn => {
-    console.log('delete book');
-
-    try {
-      const { data, status } = await axios({
-        url: `${BASE_URL}/edit/`,
-        method: 'PUT',
-        data: {
-          type: 'SUB',
-          list_id,
-          booklist: [isbn],
-        },
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-
-      setBooks(books.filter(book => book.isbn !== isbn));
-    } catch (error) {
-      console.log(error.response);
-    }
-
-    // PUT
-    // {
-    //     "type": "SUB",
-    //     "list_id": 2,
-    //     "booklist": [
-    //         2
-    //     ]
-    // }
+    dispatch(
+      shelfActions.removeBookFromShelf({
+        list_id,
+        isbn,
+      })
+    );
   };
 
   return (
     <>
-      {books.map(info => (
+      {shelves[list_id].booklist.map(info => (
         <Book info={info} deleteBook={deleteBook} />
       ))}
     </>

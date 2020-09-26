@@ -1,7 +1,8 @@
 import { handleActions, createAction } from 'redux-actions';
-import { put, takeLatest, delay, call } from 'redux-saga/effects';
+import { put, takeLatest, call } from 'redux-saga/effects';
 
 import * as shelfApi from '../api/shelf';
+import { modalActions } from './modal';
 
 // initial state
 const initialState = {
@@ -19,12 +20,10 @@ const ADD_SHELF_FAILURE = 'shelves/ADD_SHELF_FAILURE';
 const SET_SHELF = 'shelves/SET_SHELF';
 
 const ADD_BOOK_TO_SHELF = 'shelves/ADD_BOOK_TO_SHELF';
-const ADD_BOOK_TO_SHELF_SUCCESS = 'shelves/ADD_BOOK_TO_SHELF_SUCCESS';
-const ADD_BOOK_TO_SHELF_FAILURE = 'shelves/ADD_BOOK_TO_SHELF_FAILURE';
+const UPDATE_BOOK_TO_SHELF_SUCCESS = 'shelves/UPDATE_BOOK_TO_SHELF_SUCCESS';
+const UPDATE_BOOK_TO_SHELF_FAILURE = 'shelves/UPDATE_BOOK_TO_SHELF_FAILURE';
 
 const REMOVE_BOOK_FROM_SHELF = 'shelves/REMOVE_BOOK_FROM_SHELF';
-const REMOVE_BOOK_FROM_SHELF_SUCCESS = 'shelves/REMOVE_BOOK_FROM_SHELF_SUCCESS';
-const REMOVE_BOOK_FROM_SHELF_FAILURE = 'shelves/REMOVE_BOOK_FROM_SHELF_FAILURE';
 
 // action creator
 export const shelfActions = {
@@ -48,9 +47,8 @@ function* addBookToShelfSaga(action) {
       isbn
     );
 
-    // id, booklist
     yield put({
-      type: ADD_BOOK_TO_SHELF_SUCCESS,
+      type: UPDATE_BOOK_TO_SHELF_SUCCESS,
       payload: {
         id: data.id,
         data,
@@ -58,7 +56,7 @@ function* addBookToShelfSaga(action) {
     });
   } catch (error) {
     yield put({
-      type: ADD_BOOK_TO_SHELF_FAILURE,
+      type: UPDATE_BOOK_TO_SHELF_FAILURE,
       payload: '문제가 발생했습니다',
     });
   }
@@ -75,18 +73,17 @@ function* removeBookFromShelfSaga(action) {
       list_id,
       isbn
     );
-    // id, booklist
+
     yield put({
-      type: ADD_BOOK_TO_SHELF_SUCCESS,
+      type: UPDATE_BOOK_TO_SHELF_SUCCESS,
       payload: {
         id: data.id,
         data,
       },
     });
   } catch (error) {
-    console.log(error);
     yield put({
-      type: ADD_BOOK_TO_SHELF_FAILURE,
+      type: UPDATE_BOOK_TO_SHELF_FAILURE,
       payload: '문제가 발생했습니다',
     });
   }
@@ -104,12 +101,7 @@ function* addShelfSaga(action) {
       type: ADD_SHELF_SUCCESS,
       payload: data,
     });
-    yield put({
-      type: 'modal/SET_STATE',
-      payload: {
-        addShelfIsOpen: false,
-      },
-    });
+    yield put(modalActions.setState({ addShelfIsOpen: false }));
   } catch (error) {
     yield put({
       type: ADD_SHELF_FAILURE,
@@ -145,7 +137,7 @@ const shelfReducer = handleActions(
       ...prevState,
       error: action.payload,
     }),
-    [ADD_BOOK_TO_SHELF_SUCCESS]: (prevState, action) => ({
+    [UPDATE_BOOK_TO_SHELF_SUCCESS]: (prevState, action) => ({
       ...prevState,
       shelves: {
         ...prevState.shelves,
@@ -155,7 +147,7 @@ const shelfReducer = handleActions(
         },
       },
     }),
-    [ADD_BOOK_TO_SHELF_FAILURE]: (prevState, action) => ({
+    [UPDATE_BOOK_TO_SHELF_FAILURE]: (prevState, action) => ({
       ...prevState,
       error: action.payload,
     }),
