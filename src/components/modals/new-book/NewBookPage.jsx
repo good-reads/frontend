@@ -16,13 +16,19 @@ const NewBookPage = ({ handleClose }) => {
   const [bookData, setBookData] = useState({
     title: '',
     author: '',
-    intro: '',
-    thumbnail: '',
-    img: '',
+    cover: '',
+    pubdate: '',
+    isbn: '',
+    description: '',
+    publisher: '',
   });
 
   const onChangeBookData = e => {
-    setBookData({ ...bookData, [e.target.name]: e.target.value });
+    // isbn의 경우 무조건 숫자만 들어가도록 해야 함
+    const { name, value } = e.target;
+    const regex = /[^0-9]/g;
+    if (name === 'isbn' && value.search(regex) > -1) return;
+    setBookData({ ...bookData, [name]: value });
   };
 
   const changeImage = e => {
@@ -31,7 +37,7 @@ const NewBookPage = ({ handleClose }) => {
       files = target.files;
 
     if (FileReader && files && files.length) {
-      setBookData({ ...bookData, img: files, thumbnail: files });
+      setBookData({ ...bookData, cover: files });
 
       const fr = new FileReader();
       fr.onload = function() {
@@ -47,7 +53,24 @@ const NewBookPage = ({ handleClose }) => {
   };
 
   const handleAddNewBook = () => {
-    dispatch(bookActions.addNewBook(bookData));
+    let isValid = true;
+    const { isbn } = bookData;
+
+    // isbn은 10자 이상
+    if (isbn.length >= 10) {
+      Object.keys(bookData).forEach(key => {
+        if (bookData[key].length === 0) isValid = false;
+      });
+    } else {
+      isValid = false;
+    }
+
+    // 책 제목/작가/출판사/날짜/설명 은 비면 안됨
+    if (isValid) {
+      dispatch(bookActions.addNewBook(bookData));
+    } else {
+      console.log('입력하지 않은 정보가 있어 안됩니다');
+    }
   };
 
   return (
@@ -71,6 +94,19 @@ const NewBookPage = ({ handleClose }) => {
           <TextField
             autoFocus
             margin="dense"
+            label="ISBN"
+            type="text"
+            name="isbn"
+            fullWidth
+            value={bookData.isbn}
+            onChange={onChangeBookData}
+            inputProps={{
+              maxLength: 13,
+            }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
             label="책 제목"
             type="text"
             name="title"
@@ -78,6 +114,7 @@ const NewBookPage = ({ handleClose }) => {
             value={bookData.title}
             onChange={onChangeBookData}
           />
+
           <TextField
             autoFocus
             margin="dense"
@@ -91,13 +128,33 @@ const NewBookPage = ({ handleClose }) => {
           <TextField
             autoFocus
             margin="dense"
+            label="출판사"
+            type="text"
+            name="publisher"
+            fullWidth
+            value={bookData.publisher}
+            onChange={onChangeBookData}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            type="date"
+            name="pubdate"
+            fullWidth
+            value={bookData.pubdate}
+            onChange={onChangeBookData}
+            defaultValue="2020-04-06"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
             label="간단한 설명"
             rows={4}
             type="text"
-            name="intro"
+            name="description"
             multiline
             fullWidth
-            value={bookData.intro}
+            value={bookData.description}
             onChange={onChangeBookData}
           />
         </DialogContent>

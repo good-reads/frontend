@@ -22,16 +22,25 @@ export const bookActions = {
 // saga
 function* addNewBookSaga(action) {
   const authorization = localStorage.getItem('authorization');
-  const { thumbnail, img, title, author, intro } = action.payload;
+  const {
+    title,
+    author,
+    cover,
+    pubdate,
+    isbn,
+    description,
+    publisher,
+  } = action.payload;
   try {
     const formData = new FormData();
-    formData.append('img', img[0]);
-    formData.append('thumbnail', thumbnail[0]);
     formData.append('title', title);
     formData.append('author', author);
-    formData.append('intro', intro);
-    const { data } = yield call(bookApi.addNewBook, authorization, formData);
-    console.log(data);
+    formData.append('cover', cover[0]);
+    formData.append('pubdate', pubdate.replace(/[-]/g, ''));
+    formData.append('isbn', isbn);
+    formData.append('description', description);
+    formData.append('publisher', publisher);
+    yield call(bookApi.addNewBook, authorization, formData);
     yield put({ type: ADD_NEW_BOOK_SUCCESS });
     yield put(modalActions.setState({ addNewBookIsOpen: false }));
   } catch (error) {
