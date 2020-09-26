@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Logo from './components/Logo';
 import Title from './components/Title';
@@ -19,8 +19,8 @@ const Navigation = ({
   signInIsOpen,
   signUpIsOpen,
   updateModalState,
-  history,
 }) => {
+  const history = useHistory();
   const [isSearchActive, setIsSearchActive] = useState(false);
 
   const handleSignOut = () => {
@@ -112,4 +112,4 @@ const Navigation = ({
   );
 };
 
-export default withRouter(Navigation);
+export default Navigation;

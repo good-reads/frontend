@@ -30,17 +30,6 @@ const SIGNIN = 'user/SIGNIN';
 const SIGNIN_SUCCESS = 'user/SIGNIN_SUCCESS';
 const SIGNIN_FAILURE = 'user/SIGNIN_FAILURE';
 
-/*
-//..maintain
-const MAINTAIN = 'user/MAINTAIN';
-const MAINTAIN_SUCCESS = 'user/MAINTAIN_SUCCESS';
-const MAINTAIN_FAILURE = 'user/MAINTAIN_FAILURE';
-
-//..signin
-const SIGNIN_REQUEST = 'user/SIGNIN_REQUEST';
-const SIGNIN_SUCCESS = 'user/SIGNIN_SUCCESS';
-const SIGNIN_FAILURE = 'user/SIGNIN_FAILURE';
-*/
 //..signup
 const SIGNUP_REQUEST = 'user/SIGNUP_REQUEST';
 const SIGNUP_SUCCESS = 'user/SIGNUP_SUCCESS';
@@ -70,8 +59,6 @@ const signOutRequest = createAction(SIGNOUT_REQUEST);
 const signOutSuccess = createAction(SIGNOUT_SUCCESS);
 const signOutFailure = createAction(SIGNOUT_FAILURE);
 
-// action creator(async)
-
 function* maintainSaga() {
   const authorization = localStorage.getItem('authorization');
   try {
@@ -81,7 +68,7 @@ function* maintainSaga() {
     yield put(maintainSuccess(name, thumbnail));
     yield put(shelfActions.setShelves(booklist));
   } catch (error) {
-    yield put(maintainFailure(error.response));
+    yield put(maintainFailure(error.response.statusText));
   }
 }
 

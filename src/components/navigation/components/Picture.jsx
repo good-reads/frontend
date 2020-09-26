@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   small: {
@@ -14,8 +15,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Picture = ({ thumbnail }) => {
+  const history = useHistory();
   const classes = useStyles();
-  return <Avatar alt="profile" src={thumbnail} className={classes.small} />;
+
+  const handleMoveToMyPage = () => {
+    history.push('/mypage');
+  };
+
+  return (
+    <Avatar
+      onClick={handleMoveToMyPage}
+      alt="profile"
+      src={thumbnail}
+      className={classes.small}
+    />
+  );
 };
 
 export default Picture;
