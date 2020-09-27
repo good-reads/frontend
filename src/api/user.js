@@ -28,3 +28,15 @@ export const updateProfile = async (authorization, formData) =>
       'Content-Type': 'multipart/form-data',
     },
   });
+
+export const updatePassword = async (authorization, password) =>
+  await axios({
+    url: `${BASE_URL}/accounts/auth/account/update/`,
+    method: 'POST',
+    data: {
+      password,
+    },
+    headers: {
+      Authorization: `Token ${authorization}`,
+    },
+  });

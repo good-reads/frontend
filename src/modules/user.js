@@ -18,8 +18,14 @@ const initialState = {
 };
 
 // action type
+//.. change-password
+const CHANGE_PASSWORD = 'user/CHANGE_PASSWORD';
+const CHANGE_PASSWORD_SUCCESS = 'user/CHANGE_PASSWORD_SUCCESS';
+const CHANGE_PASSWORD_FAILURE = 'user/CHANGE_PASSWORD_FAILURE';
+
 //.. reset-error-message
 const RESET_ERROR_MESSAGE = 'user/RESET_ERROR_MESSAGE';
+const SET_ERROR_MESSAGE = 'user/SET_ERROR_MESSAGE';
 
 //.. update-profile
 const UPDATE_PROFILE = 'user/UPDATE_PROFILE';
@@ -47,18 +53,24 @@ const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
 const SIGNOUT_FAILURE = 'user/SIGNOUT_FAILURE';
 
 // action creator(sync)
-export const resetErrorMessage = createAction(RESET_ERROR_MESSAGE);
+export const userActions = {
+  resetErrorMessage: createAction(RESET_ERROR_MESSAGE),
+  setErrorMessage: createAction(SET_ERROR_MESSAGE),
+  updateProfile: createAction(UPDATE_PROFILE),
+  maintain: createAction(MAINTAIN),
+  signIn: createAction(SIGNIN),
+  changePassword: createAction(CHANGE_PASSWORD),
+};
 
-//.. update-profile
-export const updateProfile = createAction(UPDATE_PROFILE);
+//.. change-password
+const changePasswordSuccess = createAction(CHANGE_PASSWORD_SUCCESS);
+const changePasswordFailure = createAction(CHANGE_PASSWORD_FAILURE);
 
 //.. maintain
-export const maintain = createAction(MAINTAIN);
 const maintainSuccess = createAction(MAINTAIN_SUCCESS);
 const maintainFailure = createAction(MAINTAIN_FAILURE);
 
 //.. signin
-export const signIn = createAction(SIGNIN);
 const signInSuccess = createAction(SIGNIN_SUCCESS);
 const signInFailure = createAction(SIGNIN_FAILURE);
 
@@ -71,6 +83,25 @@ const signUpFailure = createAction(SIGNUP_FAILURE);
 const signOutRequest = createAction(SIGNOUT_REQUEST);
 const signOutSuccess = createAction(SIGNOUT_SUCCESS);
 const signOutFailure = createAction(SIGNOUT_FAILURE);
+
+function* changePasswordSaga(action) {
+  const authorization = localStorage.getItem('authorization');
+  const password = action.payload;
+  try {
+    yield call(userApi.updatePassword, authorization, password);
+    yield put(modalActions.setState({ changePasswordIsOpen: false }));
+    yield put({
+      type: RESET_ERROR_MESSAGE,
+    });
+    alert('비밀번호가 변경되었습니다');
+  } catch (error) {
+    const { non_field_errors } = error.response.data;
+    yield put({
+      type: SET_ERROR_MESSAGE,
+      payload: non_field_errors[0],
+    });
+  }
+}
 
 function* updateProfileSaga(action) {
   const authorization = localStorage.getItem('authorization');
@@ -127,6 +158,7 @@ function* signInSaga(action) {
 }
 
 export function* userSaga() {
+  yield takeLatest(CHANGE_PASSWORD, changePasswordSaga);
   yield takeLatest(SIGNIN, signInSaga);
   yield takeLatest(MAINTAIN, maintainSaga);
   yield takeLatest(UPDATE_PROFILE, updateProfileSaga);
@@ -178,6 +210,11 @@ export const signOut = () => {
 // reducer
 const userReducer = handleActions(
   {
+    //.. set-error-message
+    [SET_ERROR_MESSAGE]: (prevState, action) => ({
+      ...prevState,
+      error: action.payload,
+    }),
     //.. reset-error-message
     [RESET_ERROR_MESSAGE]: (prevState, action) => ({
       ...prevState,

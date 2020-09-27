@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateProfile, resetErrorMessage } from '../../../../modules/user';
+// import { updateProfile, resetErrorMessage } from '../../../../modules/user';
+import { userActions } from '../../../../modules/user';
+import ChangePasswordModal from '../../../modals/change-password/ChangePasswordModal';
+import { modalActions } from '../../../../modules/modal';
 
 const Modify = ({ keyword, start }) => {
   const dispatch = useDispatch();
@@ -17,13 +20,13 @@ const Modify = ({ keyword, start }) => {
   const handleModify = () => {
     if (isReadyToSave) {
       dispatch(
-        updateProfile({
+        userActions.updateProfile({
           [keyword]: modifyData,
           cb: () => setIsReadyToSave(false),
         })
       );
     } else {
-      dispatch(resetErrorMessage());
+      dispatch(userActions.resetErrorMessage());
       setIsReadyToSave(true);
     }
   };
@@ -63,7 +66,14 @@ const Profile = () => {
       {email && <Modify keyword="email" start={email} />}
       {name && <Modify keyword="name" start={name} />}
 
-      {/* <button>비밀번호 변경하기</button> */}
+      <button
+        onClick={() =>
+          dispatch(modalActions.setState({ changePasswordIsOpen: true }))
+        }
+      >
+        비밀번호 변경하기
+      </button>
+      <ChangePasswordModal />
     </div>
   );
 };

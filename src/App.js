@@ -11,14 +11,14 @@ import NewBookPage from './components/modals/new-book/NewBookPage';
 import MyPage from './components/pages/my-page/MyPage';
 import ListPage from './components/pages/list/ListPage';
 import './css/reset.css';
-import { maintain } from './modules/user';
+import { userActions } from './modules/user';
 import { modalActions } from './modules/modal';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(maintain());
+    dispatch(userActions.maintain());
   }, [dispatch]);
 
   return (

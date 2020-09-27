@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import useActions from '../../../lib/useActions';
 
 import Navigation from '../Navigation';
-import { signIn, signUp, signOut } from '../../../modules/user';
+import { userActions } from '../../../modules/user';
+import { signUp, signOut } from '../../../modules/user';
 import { modalActions } from '../../../modules/modal';
 
 const NavigationContainer = () => {
@@ -11,7 +12,7 @@ const NavigationContainer = () => {
   const { signUpIsOpen, signInIsOpen } = useSelector(({ modal }) => modal);
 
   const [onSignIn, onSignUp, onSignOut, onUpdateModalState] = useActions(
-    [signIn, signUp, signOut, modalActions.setState],
+    [userActions.signIn, signUp, signOut, modalActions.setState],
     []
   );
 
