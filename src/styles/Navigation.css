@@ -1,0 +1,83 @@
+.navigation {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.navigation__logo {
+  display: flex;
+  width: 5%;
+  padding-left: 0.5rem;
+}
+
+.navigation__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation__user {
+  display: flex;
+  align-items: center;
+}
+
+.navigation__user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navigation__search {
+  display: flex;
+  width: 95%;
+}
+
+.navigation__search .search,
+.navigation__search .search .search__input {
+  width: 100%;
+  height: 3rem;
+}
+
+/* 로그인 중 일 때 */
+/* logo: 5% */
+.navigation__inner--signin {
+  width: 95%;
+}
+
+.navigation__inner--signin .navigation__title {
+  width: 86%;
+}
+
+.navigation__inner--signin .navigation__user {
+  width: 14%;
+}
+
+.navigation__user button {
+  height: 3rem;
+}
+
+.navigation__inner .navigation__search .search .search__input {
+  padding: 0.5rem;
+}
+
+.navigation__inner .navigation__search .search__button {
+  width: 5%;
+}
+
+/* 로그인 상태가 아닐 때 */
+/* logo: 5% */
+.navigation__inner--signout {
+  width: 95%;
+}
+
+.navigation__inner--signout .navigation__title {
+  width: 88%;
+}
+.navigation__inner--signout .navigation__user {
+  width: 12%;
+}

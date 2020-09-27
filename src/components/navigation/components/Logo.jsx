@@ -6,7 +6,7 @@ const Logo = () => {
 
   const handleMoveToMain = () => history.push('/');
 
-  return <div onClick={handleMoveToMain}>📚</div>;
+  return <span onClick={handleMoveToMain}>📚</span>;
 };
 
 export default Logo;
