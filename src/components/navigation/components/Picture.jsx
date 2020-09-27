@@ -23,12 +23,9 @@ const Picture = ({ thumbnail }) => {
   };
 
   return (
-    <Avatar
-      onClick={handleMoveToMyPage}
-      alt="profile"
-      src={thumbnail}
-      className={classes.small}
-    />
+    <button onClick={handleMoveToMyPage}>
+      <Avatar alt="profile" src={thumbnail} className={classes.small} />
+    </button>
   );
 };
 

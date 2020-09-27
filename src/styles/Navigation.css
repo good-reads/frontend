@@ -1,0 +1,100 @@
+.navigation {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  background-color: #61491c;
+  color: rgba(255, 255, 255, 0.712);
+}
+
+.navigation__logo {
+  display: flex;
+  width: 4%;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.445);
+  cursor: pointer;
+}
+
+.navigation button {
+  height: 4rem;
+  padding: 0 1.2rem;
+  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.445);
+  border: solid 0.01rem rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.navigation__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.navigation__user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navigation__search {
+  display: flex;
+  width: 96%;
+}
+
+.navigation__search .search,
+.navigation__search .search .search__input {
+  width: 100%;
+  height: 3rem;
+  padding-left: 1rem;
+}
+
+.navigation__search .search .search__input {
+  border: none;
+}
+
+.navigation__search .search .search__input:focus {
+  outline: 0;
+}
+
+/* 로그인 중 일 때 */
+/* logo: 4% */
+.navigation__inner--signin {
+  width: 96%;
+}
+
+.navigation__inner--signin .navigation__title {
+  width: 100%;
+}
+
+.navigation__inner .navigation__search .search .search__input {
+  padding: 0.5rem;
+}
+
+.navigation__search .search__close {
+  width: 5%;
+}
+
+.navigation__inner--signin .navigation__user .user__search {
+  background: white;
+}
+
+/* 로그인 상태가 아닐 때 */
+/* logo: 4% */
+.navigation__inner--signout {
+  width: 96%;
+}
+
+.navigation__inner--signout .navigation__title {
+  width: 100%;
+}
+
+.navigation__user .user__signup {
+  border-radius: 4px;
+  border: solid 0.01rem white;
+}
