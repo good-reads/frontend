@@ -18,6 +18,7 @@ import './styles/reset.css';
 import './styles/common.css';
 import './styles/App.css';
 import './styles/Main.css';
+import './styles/MyPage.css';
 import './styles/Navigation.css';
 
 const App = () => {

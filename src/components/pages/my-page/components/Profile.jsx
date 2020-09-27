@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { updateProfile, resetErrorMessage } from '../../../../modules/user';
 import { userActions } from '../../../../modules/user';
 import ChangePasswordModal from '../../../modals/change-password/ChangePasswordModal';
 import { modalActions } from '../../../../modules/modal';
