@@ -14,15 +14,6 @@ const MyPage = () => {
     <div>
       {activeComponent === '0' && <Shelves />}
       {activeComponent === '1' && <Profile />}
-
-      <button
-        onClick={() =>
-          dispatch(modalActions.setState({ addShelfIsOpen: true }))
-        }
-      >
-        서재 추가하기
-      </button>
-      <AddShelfModal />
     </div>
   );
 };

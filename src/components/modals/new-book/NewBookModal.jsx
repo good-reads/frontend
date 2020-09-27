@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { bookActions } from '../../../modules/book';
 
-const NewBookPage = ({ handleClose }) => {
+const NewBookModal = ({ handleClose }) => {
   const dispatch = useDispatch();
   const { addNewBookIsOpen } = useSelector(({ modal }) => modal);
   const [src, setSrc] = useState('');
@@ -168,4 +168,4 @@ const NewBookPage = ({ handleClose }) => {
   );
 };
 
-export default NewBookPage;
+export default NewBookModal;

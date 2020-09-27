@@ -51,7 +51,7 @@ const AddShelfModal = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleAddShelf} color="primary">
-          회원가입
+          추가하기
         </Button>
       </DialogActions>
     </Dialog>

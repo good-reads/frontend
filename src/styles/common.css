@@ -1,0 +1,12 @@
+/* 출처: https://ingryong.tistory.com/4 [잉룡의 블로그] */
+.no-drag {
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+* {
+  box-sizing: border-box;
+}

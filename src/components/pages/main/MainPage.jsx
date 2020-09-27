@@ -5,15 +5,16 @@ import { getRandom } from '../../../lib/wiseSaying';
 const MainPage = () => {
   const { text, by } = getRandom();
   return (
-    <div>
-      <div>
+    <div className="main-page">
+      <ol className="main-page__wise-saying">
         {text.split('<br/>').map((line, idx) => (
-          <div key={idx}>
-            <span>{line}</span>
-          </div>
+          <li key={idx} className="wise-saying__line no-drag">
+            {line}
+          </li>
         ))}
-      </div>
-      <span>{by}</span>
+        <br />
+        <span className="wise-saying__by no-drag">{by}</span>
+      </ol>
     </div>
   );
 };
