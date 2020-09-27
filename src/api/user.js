@@ -17,3 +17,26 @@ export const getUserInfo = async authorization =>
       Authorization: `Token ${authorization}`,
     },
   });
+
+export const updateProfile = async (authorization, formData) =>
+  await axios({
+    url: `${BASE_URL}/accounts/auth/account/update/`,
+    method: 'PATCH',
+    data: formData,
+    headers: {
+      Authorization: `Token ${authorization}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+export const updatePassword = async (authorization, password) =>
+  await axios({
+    url: `${BASE_URL}/accounts/auth/account/update/`,
+    method: 'POST',
+    data: {
+      password,
+    },
+    headers: {
+      Authorization: `Token ${authorization}`,
+    },
+  });
