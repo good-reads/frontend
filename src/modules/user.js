@@ -116,7 +116,7 @@ function* updateProfileSaga(action) {
       type: UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
-    cb();
+    cb && cb();
   } catch (error) {
     const { data } = error.response;
     yield put({
