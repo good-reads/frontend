@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import * as Icons from '../../icons/Icons';
+
 const Search = ({ isLoading, searchBooks, updateSearchKeyword, history }) => {
   const [keyword, setKeyword] = useState('');
   const handleSearch = e => {
@@ -18,7 +20,7 @@ const Search = ({ isLoading, searchBooks, updateSearchKeyword, history }) => {
         value={keyword}
         onChange={e => setKeyword(e.target.value)}
       />
-      {isLoading && '로딩중...'}
+      {isLoading && <Icons.LoadingIcon />}
     </form>
   );
 };

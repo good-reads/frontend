@@ -3,6 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(-45deg, #e6c587, #615339);
+  background-size: 200% 200%;
+  animation: change 10s ease-in infinite;
 }
 
 .wise-saying__line {
@@ -20,4 +23,16 @@
   justify-content: center;
   font-weight: 100;
   cursor: default;
+}
+
+@keyframes change {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }

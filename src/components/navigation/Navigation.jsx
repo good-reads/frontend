@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import Logo from './components/Logo';
@@ -8,6 +7,7 @@ import SearchContainer from './containers/SearchContainer';
 import Picture from './components/Picture';
 import SignInModal from '../modals/signin/SignInModal';
 import SignUpModal from '../modals/signup/SignUpModal';
+import * as Icons from '../icons/Icons';
 
 const Navigation = ({
   thumbnail,
@@ -29,7 +29,7 @@ const Navigation = ({
   };
 
   return (
-    <div className="navigation" style={{ background: 'yellowgreen' }}>
+    <div className="navigation">
       <div className="navigation__logo">
         <Logo />
       </div>
@@ -37,10 +37,10 @@ const Navigation = ({
         <div className="navigation__search">
           <SearchContainer />
           <button
-            className="search__button"
+            className="search__close"
             onClick={() => setIsSearchActive(false)}
           >
-            X
+            <Icons.CloseIcon />
           </button>
         </div>
       ) : (
@@ -53,12 +53,22 @@ const Navigation = ({
               </div>
 
               <div className="navigation__user">
-                <button onClick={() => setIsSearchActive(true)}>🔍</button>
+                <button
+                  className="user__search"
+                  onClick={() => setIsSearchActive(true)}
+                >
+                  <Icons.SearchIcon />
+                </button>
                 {isLoading ? (
-                  <span>로딩중...</span>
+                  <button>
+                    {/* <LoadingIcon /> */}
+                    <Icons.LoadingIcon />
+                  </button>
                 ) : (
                   <>
-                    <button onClick={() => handleSignOut()}>로그아웃</button>
+                    <button onClick={() => handleSignOut()}>
+                      <Icons.SignOutIcon />
+                    </button>
                     <Picture thumbnail={thumbnail} />
                   </>
                 )}
@@ -72,18 +82,21 @@ const Navigation = ({
               </div>
               <div className="navigation__user">
                 {isLoading ? (
-                  <span>로딩중...</span>
+                  <button>
+                    <Icons.LoadingIcon />
+                  </button>
                 ) : (
                   <>
                     <button
                       onClick={() => updateModalState({ signInIsOpen: true })}
                     >
-                      로그인
+                      <Icons.SignInIcon />
                     </button>
                     <button
+                      className="user__signup"
                       onClick={() => updateModalState({ signUpIsOpen: true })}
                     >
-                      회원가입
+                      <Icons.SignUpIcon />
                     </button>
                   </>
                 )}
