@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 // initial state
 const initialState = {
-  activeComponent: '1',
+  activeComponent: '0',
 };
 
 // action type
