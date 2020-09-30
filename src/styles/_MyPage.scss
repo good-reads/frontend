@@ -1,0 +1,25 @@
+@import '_colors';
+.my-page__tab {
+  display: flex;
+  justify-content: center;
+
+  .tab__item {
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0 0.5rem;
+    background: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: 200;
+    color: $dark-brown;
+
+    &:focus {
+      outline: 0;
+    }
+    &:hover,
+    &.tab__item--selected {
+      font-weight: 400;
+      color: $deep-dark-brown;
+    }
+  }
+}
