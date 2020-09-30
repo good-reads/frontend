@@ -24,3 +24,11 @@ export const SignInIcon = () => {
 export const SignUpIcon = () => {
   return <FontAwesomeIcon icon={['fas', 'user-plus']} />;
 };
+
+export const SaveIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'save']} />;
+};
+
+export const EditIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'pencil-alt']} />;
+};
