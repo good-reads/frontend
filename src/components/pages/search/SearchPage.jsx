@@ -4,7 +4,7 @@ import SearchListContainer from './containers/SearchListContainer';
 
 const SearchPage = () => {
   return (
-    <div>
+    <div className="search-page">
       <SearchListContainer />
     </div>
   );

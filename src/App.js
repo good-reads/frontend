@@ -21,6 +21,7 @@ import './styles/Main.css';
 // import './styles/MyPage.css';
 import './styles/_MyPage.scss';
 import './styles/Navigation.css';
+import './styles/_SearchPage.scss';
 
 const App = () => {
   const dispatch = useDispatch();
