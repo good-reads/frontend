@@ -1,8 +1,10 @@
 @import '_colors';
+@import '_aligns';
 
 .my-page__tab {
-  display: flex;
-  justify-content: center;
+  @include center-row();
+  margin-bottom: 2rem;
+  margin-top: 1rem;
 
   .tab__item {
     border: none;
@@ -27,8 +29,8 @@
 
 .my-page {
   .my-page__shelves {
-    display: flex;
-    justify-content: center;
+    @include center-row();
+
     flex-wrap: wrap;
     .shelf {
       background: none;
@@ -45,5 +47,111 @@
       }
     }
   }
+  .profile {
+    @include center-row();
+
+    .profile__picture {
+      margin-right: 1rem;
+      img {
+        width: 15rem;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      .picture__upload {
+        position: relative;
+
+        .upload__label {
+          @include center-col-row();
+          position: absolute;
+          border-radius: 50%;
+          width: 2.5rem;
+          height: 2.5rem;
+          font-size: 1rem;
+          cursor: pointer;
+          bottom: 0;
+          right: 2rem;
+          @include button-color--default(white, $deep-dark-brown);
+
+          &:hover {
+            @include button-color--hover($deep-dark-brown, white);
+          }
+        }
+      }
+    }
+
+    .profile__modify {
+      @include center-col();
+      width: 15rem;
+
+      .modify__item {
+        margin: 0.5rem 0;
+        height: 3rem;
+        color: $deep-dark-brown;
+
+        .item__inner {
+          display: flex;
+
+          .item__button {
+            @include center-col-row();
+            @include button-color--default($deep-dark-brown, white);
+
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            margin-right: 0.5rem;
+            border: 0.01rem solid $deep-dark-brown;
+            cursor: pointer;
+
+            &:focus {
+              outline: 0;
+            }
+
+            &:hover {
+              @include button-color--hover(white, $deep-dark-brown);
+              border: 0.01rem solid $deep-dark-brown;
+            }
+          }
+
+          .item__content {
+            @include center-col();
+            cursor: default;
+
+            &:hover {
+              font-weight: 450;
+            }
+          }
+        }
+
+        .item--edit {
+          .item__input {
+            padding: 0 0.5rem;
+            border-radius: 4px;
+            border: 0.01rem dashed $deep-dark-brown;
+            width: 100%;
+          }
+        }
+
+        .item__error {
+          font-size: 0.8rem;
+          margin-top: 0.3rem;
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+
+      .modify__password {
+        border: 0.01rem dashed $deep-dark-brown;
+        border-radius: 4px;
+        padding: 0.3rem 0;
+        @include button-color--default(white, $deep-dark-brown);
+        cursor: pointer;
+        &:hover {
+          @include button-color--hover($deep-dark-brown, white);
+        }
+      }
+    }
+  }
+
   margin-bottom: 1rem;
 }

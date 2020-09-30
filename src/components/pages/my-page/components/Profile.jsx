@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../../../modules/user';
 import ChangePasswordModal from '../../../modals/change-password/ChangePasswordModal';
 import { modalActions } from '../../../../modules/modal';
+import * as Icons from '../../../icons/Icons';
 
 const Modify = ({ keyword, start }) => {
   const dispatch = useDispatch();
@@ -31,25 +32,32 @@ const Modify = ({ keyword, start }) => {
   };
 
   return (
-    <>
+    <div className="modify__item">
       {!isReadyToSave && (
-        <div>
-          <button onClick={handleModify}>수정</button>
-          <span>{start}</span>
+        <div className="item__inner item--save">
+          <button className="item__button" onClick={handleModify}>
+            <Icons.EditIcon />
+          </button>
+          <span className="item__content">{start}</span>
         </div>
       )}
       {isReadyToSave && (
-        <div>
-          <button onClick={handleModify}>저장</button>
-          <input
-            type="text"
-            placeholder={start}
-            onChange={onChangeModifydata}
-          />
-          <span>{error}</span>
-        </div>
+        <>
+          <div className="item__inner item--edit">
+            <button className="item__button" onClick={handleModify}>
+              <Icons.SaveIcon />
+            </button>
+            <input
+              type="text"
+              placeholder={start}
+              onChange={onChangeModifydata}
+              className="item__input"
+            />
+          </div>
+          <span className="item__error">{error}</span>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
@@ -86,29 +94,39 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className="profile">
       {src && (
-        <>
-          <img alt="프로필 이미지" src={src} />
-          <label htmlFor="profile-thumbnail">📷</label>
-          <input
-            onChange={changeImage}
-            type="file"
-            accept=".jpg,.png"
-            id="profile-thumbnail"
-          />
-        </>
+        <div className="profile__picture">
+          <div className="picture__image">
+            <img alt="프로필 이미지" src={src} />
+          </div>
+          <div className="picture__upload">
+            <label className="upload__label" htmlFor="profile-thumbnail">
+              <Icons.EditIcon />
+            </label>
+            <input
+              onChange={changeImage}
+              type="file"
+              accept=".jpg,.png"
+              id="profile-thumbnail"
+              hidden
+            />
+          </div>
+        </div>
       )}
-      {email && <Modify keyword="email" start={email} />}
-      {name && <Modify keyword="name" start={name} />}
+      <div className="profile__modify">
+        {email && <Modify keyword="email" start={email} />}
+        {name && <Modify keyword="name" start={name} />}
+        <button
+          className="modify__password"
+          onClick={() =>
+            dispatch(modalActions.setState({ changePasswordIsOpen: true }))
+          }
+        >
+          비밀번호 변경하기
+        </button>
+      </div>
 
-      <button
-        onClick={() =>
-          dispatch(modalActions.setState({ changePasswordIsOpen: true }))
-        }
-      >
-        비밀번호 변경하기
-      </button>
       <ChangePasswordModal />
     </div>
   );

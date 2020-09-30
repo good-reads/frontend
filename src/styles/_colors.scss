@@ -3,3 +3,15 @@ $dark-brown: #61491c;
 $brown: #ad8232;
 $orange: #e0a941;
 $pale-orange: #e6c587;
+
+@mixin button-color--default($color-text, $color-bg) {
+  color: $color-text;
+  background: $color-bg;
+  border: 0.01rem solid $color-bg;
+}
+
+@mixin button-color--hover($color-text, $color-bg) {
+  color: $color-text;
+  background: $color-bg;
+  border: 0.01rem dashed $color-text;
+}
