@@ -6,7 +6,7 @@ import Shelf from './Shelf';
 const Shelves = () => {
   const { shelves } = useSelector(({ shelf }) => shelf);
   return (
-    <div>
+    <div className="my-page__shelves">
       {Object.keys(shelves).map(id => (
         <Shelf key={shelves[id].id} info={shelves[id]} />
       ))}

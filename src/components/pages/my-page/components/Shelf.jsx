@@ -9,7 +9,11 @@ const Shelf = ({ info, history }) => {
       state: { list_id: id, booklist, list_name },
     });
   };
-  return <button onClick={showDetails}># {list_name}</button>;
+  return (
+    <button className="shelf" onClick={showDetails}>
+      # {list_name}
+    </button>
+  );
 };
 
 export default withRouter(Shelf);

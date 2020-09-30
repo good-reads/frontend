@@ -1,4 +1,5 @@
 @import '_colors';
+
 .my-page__tab {
   display: flex;
   justify-content: center;
@@ -22,4 +23,27 @@
       color: $deep-dark-brown;
     }
   }
+}
+
+.my-page {
+  .my-page__shelves {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .shelf {
+      background: none;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      color: $dark-brown;
+      border-radius: 4px;
+      border: 0.01rem dashed $dark-brown;
+      cursor: pointer;
+
+      &:hover {
+        border: 0.01rem solid rgba($deep-dark-brown, 0.5);
+        background: rgba($deep-dark-brown, 0.3);
+      }
+    }
+  }
+  margin-bottom: 1rem;
 }
