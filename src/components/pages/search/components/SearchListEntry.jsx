@@ -10,13 +10,13 @@ const SearchListEntry = ({ book, history }) => {
     });
   };
   return (
-    <div onClick={showDetail}>
-      <div>
+    <div className="list__item" onClick={showDetail}>
+      <div className="item__image">
         <img src={cover} alt={`${title} 사진`} />
       </div>
-      <div>
-        <span>{title}</span>
-        <span>{author}</span>
+      <div className="item__detail">
+        <span className="item__info item__title">{title}</span>
+        <span className="item__info item__author">{author}</span>
       </div>
       <div>{/* 리스트에 있는지 */}</div>
     </div>
