@@ -1,7 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const SearchListEntry = ({ book, history }) => {
+const SearchListEntry = ({ book, scrollPosition }) => {
+  const history = useHistory();
   const { author, cover, title, isbn } = book;
   const showDetail = () => {
     history.push({
@@ -12,7 +13,7 @@ const SearchListEntry = ({ book, history }) => {
   return (
     <div className="list__item" onClick={showDetail}>
       <div className="item__image">
-        <img src={cover} alt={`${title} 사진`} />
+        <img loading="lazy" height="100px" src={cover} alt={`${title} 사진`} />
       </div>
       <div className="item__detail">
         <span className="item__info item__title">{title}</span>
@@ -23,4 +24,4 @@ const SearchListEntry = ({ book, history }) => {
   );
 };
 
-export default withRouter(SearchListEntry);
+export default SearchListEntry;
