@@ -1,0 +1,34 @@
+@import '_aligns';
+@import '_colors';
+
+.review {
+  display: inline-block;
+  .review__inner {
+    display: flex;
+    padding: 0.5rem;
+    border: 0.01rem dashed $deep-dark-brown;
+    border-radius: 4px;
+    margin: 1.5rem 1.5rem 1rem 0;
+    position: relative;
+
+    .review__button {
+      display: flex;
+      position: absolute;
+      top: -1rem;
+      right: -1rem;
+
+      .button__item {
+        border-radius: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        @include button-color--default(white, $deep-dark-brown);
+        @include center-col-row();
+
+        &:hover {
+          @include button-color--hover($deep-dark-brown, white);
+        }
+      }
+    }
+  }
+}

@@ -130,9 +130,9 @@ function* maintainSaga() {
   const authorization = localStorage.getItem('authorization');
   try {
     const {
-      data: { booklist, name, thumbnail, email },
+      data: { id, booklist, name, thumbnail, email },
     } = yield call(userApi.getUserInfo, authorization);
-    yield put(maintainSuccess({ name, thumbnail, email }));
+    yield put(maintainSuccess({ id, name, thumbnail, email }));
     yield put(shelfActions.setShelves(booklist));
   } catch (error) {
     yield put(maintainFailure(error.response.statusText));
@@ -146,10 +146,10 @@ function* signInSaga(action) {
     } = yield call(userApi.signIn, action.payload);
 
     const {
-      data: { name, thumbnail, booklist, email },
+      data: { id, name, thumbnail, booklist, email },
     } = yield call(userApi.getUserInfo, token);
     yield put(shelfActions.setShelves(booklist));
-    yield put(signInSuccess({ name, thumbnail, email }));
+    yield put(signInSuccess({ id, name, thumbnail, email }));
     yield put(modalActions.setState({ signInIsOpen: false }));
     localStorage.setItem('authorization', token);
   } catch (error) {

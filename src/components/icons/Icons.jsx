@@ -32,3 +32,15 @@ export const SaveIcon = () => {
 export const EditIcon = () => {
   return <FontAwesomeIcon icon={['fas', 'pencil-alt']} />;
 };
+
+export const PlusIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'plus']} />;
+};
+
+export const StarIcon = ({ onClick }) => {
+  return <FontAwesomeIcon onClick={onClick} icon={['fas', 'star']} />;
+};
+
+export const StarBorderIcon = ({ onClick }) => {
+  return <FontAwesomeIcon onClick={onClick} icon={['far', 'star']} />;
+};
