@@ -22,6 +22,7 @@ import './styles/_MyPage.scss';
 import './styles/Navigation.css';
 import './styles/_SearchPage.scss';
 import './styles/_DetailPage.scss';
+import './styles/_Review.scss';
 
 const App = () => {
   const dispatch = useDispatch();

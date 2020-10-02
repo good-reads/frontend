@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import ReviewEntry from './ReviewEntry';
 import AddBookToShelf from './AddBookToShelf';
@@ -9,6 +7,22 @@ import * as Icons from '../../../icons/Icons';
 
 const BASE_URL =
   'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api/books';
+
+const Rate = ({ rate }) => {
+  rate = Math.floor(rate);
+  const ret = [];
+  for (let i = 0; i < rate; i++) {
+    ret.push(true);
+  }
+  for (let i = rate; i < 5; i++) {
+    ret.push(false);
+  }
+  return (
+    <>
+      {ret.map(item => (item ? <Icons.StarIcon /> : <Icons.StarBorderIcon />))}
+    </>
+  );
+};
 
 const BookDetail = ({ info }) => {
   // 책 1권에 대한 모든 정보 받아오는 api 사용하기
@@ -36,6 +50,8 @@ const BookDetail = ({ info }) => {
   const updateLikeStars = useCallback(
     idx => {
       const tempLikeStars = [];
+
+      idx = Math.floor(idx);
 
       for (let i = 0; i < idx + 1; i++) tempLikeStars.push(true);
       for (let i = idx + 1; i < likeStars.length; i++)
@@ -146,8 +162,6 @@ const BookDetail = ({ info }) => {
     } catch (error) {
       console.log(error);
     }
-
-    console.log('hi');
   };
 
   return (
@@ -162,7 +176,11 @@ const BookDetail = ({ info }) => {
           </span>
           <span className="info__item info__publisher">{detail.publisher}</span>
           <span className="info__item info__pubdate">{detail.pubdate}</span>
-          <span className="info__item info__rate">{detail.rate}</span>
+          {detail.rate && (
+            <span className="info__item info__rate">
+              <Rate rate={detail.rate} /> ({detail.rate})
+            </span>
+          )}
         </div>
       </div>
       <div className="book-detail__inner-sub">
@@ -176,9 +194,9 @@ const BookDetail = ({ info }) => {
         <div className="review__stars">
           {likeStars.map((star, idx) =>
             star ? (
-              <StarIcon onClick={() => submitRate(idx)} />
+              <Icons.StarIcon onClick={() => submitRate(idx)} />
             ) : (
-              <StarBorderIcon onClick={() => submitRate(idx)} />
+              <Icons.StarBorderIcon onClick={() => submitRate(idx)} />
             )
           )}
         </div>

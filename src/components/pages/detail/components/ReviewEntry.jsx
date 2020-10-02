@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
+import * as Icons from '../../../icons/Icons';
+
 const ReviewEntry = ({ review, isbn }) => {
-  console.log('REVIEW>>', review);
   const token = localStorage.getItem('authorization');
 
   const BASE_URL =
@@ -14,8 +16,7 @@ const ReviewEntry = ({ review, isbn }) => {
   });
   const [reviewContent, setReviewContent] = useState(info.content);
   const [isEdit, setIsEdit] = useState(false);
-  const userId = localStorage.getItem('userId');
-  console.log(info.user, userId);
+  const userId = useSelector(({ user }) => user.informations.id);
   // id: review_id
   // user: user_id
 
@@ -33,7 +34,6 @@ const ReviewEntry = ({ review, isbn }) => {
         },
       });
 
-      console.log('>>', result);
       setInfo({ id: '', content: '', user: '' });
     } catch (error) {
       console.log(error.response);
@@ -66,24 +66,39 @@ const ReviewEntry = ({ review, isbn }) => {
     }
   };
   return (
-    <ul>
-      <li>{info.user}</li>
-      {isEdit && (
-        <input
-          placeholder={info.content}
-          value={reviewContent}
-          onChange={e => setReviewContent(e.target.value)}
-        />
-      )}
-      {!isEdit && <li>{info.content}</li>}
+    <div className="review">
+      <div className="review__inner">
+        {isEdit && (
+          <input
+            clasName="review__input"
+            placeholder={info.content}
+            value={reviewContent}
+            onChange={e => setReviewContent(e.target.value)}
+          />
+        )}
+        {!isEdit && <span className="review__content">{info.content}</span>}
 
-      {info.user === Number(userId) && (
-        <button onClick={deleteReview}>X</button>
-      )}
-      {info.user === Number(userId) && (
-        <button onClick={() => editReview()}>{isEdit ? '저장' : '수정'}</button>
-      )}
-    </ul>
+        <div className="review__button">
+          {info.user === Number(userId) && (
+            <button
+              className="button__item button__delete"
+              onClick={deleteReview}
+            >
+              <Icons.CloseIcon />
+            </button>
+          )}
+
+          {info.user === Number(userId) && (
+            <button
+              className="button__item button__modify"
+              onClick={() => editReview()}
+            >
+              {isEdit ? <Icons.SaveIcon /> : <Icons.EditIcon />}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

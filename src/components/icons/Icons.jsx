@@ -36,3 +36,11 @@ export const EditIcon = () => {
 export const PlusIcon = () => {
   return <FontAwesomeIcon icon={['fas', 'plus']} />;
 };
+
+export const StarIcon = ({ onClick }) => {
+  return <FontAwesomeIcon onClick={onClick} icon={['fas', 'star']} />;
+};
+
+export const StarBorderIcon = ({ onClick }) => {
+  return <FontAwesomeIcon onClick={onClick} icon={['far', 'star']} />;
+};

@@ -60,7 +60,7 @@ const Shelves = ({ isbn }) => {
 };
 
 const AddBookToShelf = ({ isbn }) => {
-  const [addBookToShelfIsOpen, setAddBookToShelfIsOpen] = useState(true);
+  const [addBookToShelfIsOpen, setAddBookToShelfIsOpen] = useState(false);
   const handleAddBookToShelf = () => {
     setAddBookToShelfIsOpen(!addBookToShelfIsOpen);
   };
