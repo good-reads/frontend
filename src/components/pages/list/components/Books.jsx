@@ -18,11 +18,11 @@ const Books = ({ list_id }) => {
   };
 
   return (
-    <>
+    <div className="list-page__books">
       {shelves[list_id].booklist.map(info => (
         <Book info={info} deleteBook={deleteBook} />
       ))}
-    </>
+    </div>
   );
 };
 

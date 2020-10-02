@@ -1,16 +1,29 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import Books from './components/Books';
 
-const ListPage = ({ history }) => {
-  const { list_id, list_name } = history.location.state;
+const ListPage = () => {
+  const { shelves } = useSelector(({ shelf }) => shelf);
+  const list_id = localStorage.getItem('list_id');
+  const [listName, setListName] = useState('');
+
+  useEffect(() => {
+    if (shelves[list_id]) {
+      setListName(shelves[list_id].list_name);
+    }
+  }, [list_id, shelves]);
+
   return (
-    <div>
-      <h1>#{list_name}</h1>
-      <Books list_id={list_id} />
+    <div className="list-page">
+      {shelves[list_id] && (
+        <div className="list-page__inner">
+          <h1 className="list-page__shelf-name">#{listName}</h1>
+          <Books list_id={list_id} />
+        </div>
+      )}
     </div>
   );
 };
 
-export default withRouter(ListPage);
+export default ListPage;

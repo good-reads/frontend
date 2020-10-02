@@ -8,6 +8,7 @@ const Shelf = ({ info, history }) => {
       pathname: '/list',
       state: { list_id: id, booklist, list_name },
     });
+    localStorage.setItem('list_id', id);
   };
   return (
     <button className="shelf" onClick={showDetails}>
