@@ -29,7 +29,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userActions.maintain());
+    const authorization = localStorage.getItem('authorization');
+    if (!!authorization) dispatch(userActions.maintain());
   }, [dispatch]);
 
   return (
