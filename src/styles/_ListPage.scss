@@ -1,0 +1,75 @@
+@import '_colors';
+@import '_aligns';
+
+.list-page {
+  color: $deep-dark-brown;
+  .list-page__inner {
+    margin-top: 0.5rem;
+
+    .list-page__shelf-name {
+      @include center-row();
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.list-page__books {
+  margin: 1rem;
+  .book-info {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-shadow: 0px 0px 5px $deep-dark-brown;
+    margin-right: 0.5rem;
+  }
+  .book-info__inner {
+    display: flex;
+    position: relative;
+
+    .book-info__remove {
+      position: absolute;
+      top: -1rem;
+      right: -1rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      @include button-color--default(white, $deep-dark-brown);
+
+      &:hover {
+        @include button-color--hover($deep-dark-brown, white);
+      }
+    }
+
+    .book-info__inner-image {
+      .book-info__item {
+        display: block;
+      }
+      .book-info__image {
+        display: block;
+        height: 4rem;
+        width: auto;
+        border-radius: 4px;
+        box-shadow: 0px 0px 5px $deep-dark-brown;
+        margin: 0.5rem;
+      }
+    }
+
+    .book-info__inner-detail {
+      @include center-col();
+
+      .book-info__item {
+        margin: 0.5rem 0;
+      }
+
+      .book-info__title {
+        font-weight: 600;
+      }
+
+      .book-info__author {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
