@@ -32,3 +32,7 @@ export const SaveIcon = () => {
 export const EditIcon = () => {
   return <FontAwesomeIcon icon={['fas', 'pencil-alt']} />;
 };
+
+export const PlusIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'plus']} />;
+};

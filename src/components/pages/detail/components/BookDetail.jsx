@@ -5,6 +5,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 import ReviewEntry from './ReviewEntry';
 import AddBookToShelf from './AddBookToShelf';
+import * as Icons from '../../../icons/Icons';
 
 const BASE_URL =
   'http://ec2-54-180-154-184.ap-northeast-2.compute.amazonaws.com/api/books';
@@ -93,6 +94,24 @@ const BookDetail = ({ info }) => {
     getBookData();
   }, [getBookData]);
 
+  const replaceText = text => {
+    const regexs = [
+      { regex: /(&#x0D;)/gm, to: ' ' },
+      {
+        regex: /(&lt;)/gm,
+        to: '<',
+      },
+      {
+        regex: /(&gt;)/gm,
+        to: '>',
+      },
+    ];
+    regexs.forEach(({ regex, to }) => {
+      text = text.replace(regex, to);
+    });
+    return text;
+  };
+
   const submitRate = async idx => {
     updateLikeStars(idx);
 
@@ -132,20 +151,29 @@ const BookDetail = ({ info }) => {
   };
 
   return (
-    <div>
-      <img src={detail.cover} alt="title" />
-      <div>
-        <h1>{detail.title}</h1>
-        <h2>{detail.author}</h2>
-        <h3>{detail.rate}</h3>
-        <h3>{detail.publisher}</h3>
-        <h3>{detail.pubdate}</h3>
-        <p>{detail.description}</p>
+    <div className="book-detail">
+      <div className="book-detail__inner-main">
+        <img className="book-detail__image" src={detail.cover} alt="title" />
+        <AddBookToShelf isbn={isbn} />
+        <div className="book-detail__info">
+          <span className="info__item info__title">{detail.title}</span>
+          <span className="info__item info__author">
+            {detail.author} (지은이)
+          </span>
+          <span className="info__item info__publisher">{detail.publisher}</span>
+          <span className="info__item info__pubdate">{detail.pubdate}</span>
+          <span className="info__item info__rate">{detail.rate}</span>
+        </div>
       </div>
-      <AddBookToShelf isbn={isbn} />
-      <div>
-        <h1>리뷰</h1>
-        <div>
+      <div className="book-detail__inner-sub">
+        <span className="info__item info__description">
+          {replaceText(detail.description)}
+        </span>
+      </div>
+
+      <div className="book-detail__review">
+        <h1 className="review__header">100자평</h1>
+        <div className="review__stars">
           {likeStars.map((star, idx) =>
             star ? (
               <StarIcon onClick={() => submitRate(idx)} />
@@ -154,14 +182,18 @@ const BookDetail = ({ info }) => {
             )
           )}
         </div>
-        <div>
+        <div className="review__text">
           <form onSubmit={handleReview}>
             <input
+              className="text__input"
               type="text"
               value={review}
               onChange={e => setReview(e.target.value)}
+              maxLength={100}
             />
-            <button>등록</button>
+            <button className="text__submit">
+              <Icons.SaveIcon />
+            </button>
           </form>
         </div>
         <ul>

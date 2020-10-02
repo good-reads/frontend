@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { shelfActions } from '../../../../modules/shelf';
+import * as Icons from '../../../icons/Icons';
 
 const Shelf = ({ shelf, isbn }) => {
   const dispatch = useDispatch();
@@ -36,28 +37,24 @@ const Shelf = ({ shelf, isbn }) => {
     setIsAlreadAdd(!isAlreadyAdd);
   };
   return (
-    <>
+    <div className="shelf">
       <span>{list_name}</span>
       <input
         type="checkbox"
         checked={isAlreadyAdd}
         onChange={handleChangeCheckbox}
       />
-    </>
+    </div>
   );
 };
 
 const Shelves = ({ isbn }) => {
   const { shelves } = useSelector(({ shelf }) => shelf);
   return (
-    <div>
-      <ul>
-        {Object.keys(shelves).map(id => (
-          <li key={shelves[id].id}>
-            <Shelf shelf={shelves[id]} isbn={isbn} />
-          </li>
-        ))}
-      </ul>
+    <div className="shelves">
+      {Object.keys(shelves).map(id => (
+        <Shelf key={shelves[id].id} shelf={shelves[id]} isbn={isbn} />
+      ))}
     </div>
   );
 };
@@ -68,8 +65,13 @@ const AddBookToShelf = ({ isbn }) => {
     setAddBookToShelfIsOpen(!addBookToShelfIsOpen);
   };
   return (
-    <div>
-      <button onClick={handleAddBookToShelf}>리스트에 추가하기</button>
+    <div className="add-book-to-shelf">
+      <button
+        className="add-book-to-shelf__button"
+        onClick={handleAddBookToShelf}
+      >
+        <Icons.PlusIcon />
+      </button>
       {addBookToShelfIsOpen && <Shelves isbn={isbn} />}
     </div>
   );

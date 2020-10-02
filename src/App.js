@@ -18,10 +18,10 @@ import './styles/reset.css';
 import './styles/common.css';
 import './styles/App.css';
 import './styles/Main.css';
-// import './styles/MyPage.css';
 import './styles/_MyPage.scss';
 import './styles/Navigation.css';
 import './styles/_SearchPage.scss';
+import './styles/_DetailPage.scss';
 
 const App = () => {
   const dispatch = useDispatch();
