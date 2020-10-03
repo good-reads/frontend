@@ -80,7 +80,9 @@ const NewBookModal = ({ handleClose }) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">책 추가하기</DialogTitle>
+        <DialogTitle className="modal" id="form-dialog-title">
+          책 추가하기
+        </DialogTitle>
         <DialogContent>
           <img alt="img" src={src}></img>
           <label htmlFor="book-thumbnail">📷</label>

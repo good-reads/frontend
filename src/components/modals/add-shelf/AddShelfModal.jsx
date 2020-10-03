@@ -36,7 +36,9 @@ const AddShelfModal = () => {
       onClose={handleClose}
       aria-labelledby="서재 추가하기"
     >
-      <DialogTitle id="form-dialog-title">서재 추가하기</DialogTitle>
+      <DialogTitle className="modal" id="form-dialog-title">
+        서재 추가하기
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
