@@ -54,6 +54,24 @@ const NewBookModal = ({ handleClose }) => {
     }
   };
 
+  const clearAll = () => {
+    setBookData({
+      title: '',
+      author: '',
+      cover: '',
+      pubdate: '',
+      isbn: '',
+      description: '',
+      publisher: '',
+    });
+    setSrc('');
+  };
+
+  const closeModal = () => {
+    clearAll();
+    handleClose();
+  };
+
   const handleAddNewBook = () => {
     let isValid = true;
     const { isbn } = bookData;
@@ -69,7 +87,12 @@ const NewBookModal = ({ handleClose }) => {
 
     // 책 제목/작가/출판사/날짜/설명 은 비면 안됨
     if (isValid) {
-      dispatch(bookActions.addNewBook(bookData));
+      dispatch(
+        bookActions.addNewBook({
+          ...bookData,
+          cb: clearAll,
+        })
+      );
     } else {
       alert('모든 정보를 올바르게 입력해주세요');
     }
@@ -78,7 +101,7 @@ const NewBookModal = ({ handleClose }) => {
   return (
     <Dialog
       open={addNewBookIsOpen}
-      onClose={handleClose}
+      onClose={closeModal}
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle className="modal" id="form-dialog-title">

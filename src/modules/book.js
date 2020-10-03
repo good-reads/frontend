@@ -33,6 +33,7 @@ function* addNewBookSaga(action) {
     isbn,
     description,
     publisher,
+    cb,
   } = action.payload;
   try {
     const formData = new FormData();
@@ -46,8 +47,11 @@ function* addNewBookSaga(action) {
     yield call(bookApi.addNewBook, authorization, formData);
     yield put({ type: ADD_NEW_BOOK_SUCCESS });
     yield put(modalActions.setState({ addNewBookIsOpen: false }));
+    alert('책이 추가되었습니다');
+    cb();
   } catch (error) {
-    yield put({ type: ADD_NEW_BOOK_FAILURE, error: error.response });
+    const { data } = error.response;
+    yield put({ type: ADD_NEW_BOOK_FAILURE, payload: data.isbn[0] });
   }
 }
 
