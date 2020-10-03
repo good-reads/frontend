@@ -199,7 +199,7 @@ export const signOut = () => {
         }
       );
       dispatch(signOutSuccess());
-      console.log(result);
+      localStorage.removeItem('authorization');
     } catch (error) {
       dispatch(signOutFailure());
       console.log(error);

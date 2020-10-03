@@ -44,3 +44,19 @@ export const StarIcon = ({ onClick }) => {
 export const StarBorderIcon = ({ onClick }) => {
   return <FontAwesomeIcon onClick={onClick} icon={['far', 'star']} />;
 };
+
+export const BarsIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'bars']} />;
+};
+
+export const BookIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'book']} />;
+};
+
+export const ListIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'list-ul']} />;
+};
+
+export const ImageIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'image']} />;
+};

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ import ListPage from './components/pages/list/ListPage';
 import AddShelfModal from './components/modals/add-shelf/AddShelfModal';
 import { userActions } from './modules/user';
 import { modalActions } from './modules/modal';
+import * as Icons from './components/icons/Icons';
 
 import './styles/reset.css';
 import './styles/common.css';
@@ -24,24 +25,22 @@ import './styles/_SearchPage.scss';
 import './styles/_DetailPage.scss';
 import './styles/_ListPage.scss';
 import './styles/_Review.scss';
+import './styles/_Fab.scss';
+import './styles/_Shelf.scss';
+import './styles/_Modal.scss';
 
 const App = () => {
   const dispatch = useDispatch();
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(userActions.maintain());
+    const authorization = localStorage.getItem('authorization');
+    if (!!authorization) dispatch(userActions.maintain());
   }, [dispatch]);
 
   return (
     <div className="container">
       <Router>
-        <Link to="/">Main/</Link>
-        <Link to="/search">Search/</Link>
-        <Link to="/detail">Detail/</Link>
-        <Link to="/new-book">New-Book/</Link>
-        <Link to="/mypage">My Page/</Link>
-        <Link to="/list">List</Link>
-
         <NavigationContainer />
 
         <Switch>
@@ -70,20 +69,38 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-      <button
-        onClick={() =>
-          dispatch(modalActions.setState({ addNewBookIsOpen: true }))
-        }
-      >
-        새로운 책 추가하기
-      </button>
-      <button
-        onClick={() =>
-          dispatch(modalActions.setState({ addShelfIsOpen: true }))
-        }
-      >
-        서재 추가하기
-      </button>
+
+      <div className="float-button">
+        <button
+          className="float-button__parent"
+          onClick={() => setMenuIsOpen(!menuIsOpen)}
+        >
+          <Icons.BarsIcon />
+        </button>
+        {menuIsOpen && (
+          <>
+            <button
+              className="float-button__child float-button__new-book"
+              onClick={() =>
+                dispatch(modalActions.setState({ addNewBookIsOpen: true }))
+              }
+            >
+              <Icons.BookIcon />
+              <Icons.PlusIcon />
+            </button>
+            <button
+              className="float-button__child float-button__new-list"
+              onClick={() =>
+                dispatch(modalActions.setState({ addShelfIsOpen: true }))
+              }
+            >
+              <Icons.ListIcon />
+              <Icons.PlusIcon />
+            </button>
+          </>
+        )}
+      </div>
+
       <NewBookModal
         handleClose={() =>
           dispatch(modalActions.setState({ addNewBookIsOpen: false }))

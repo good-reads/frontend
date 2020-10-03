@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,6 +18,7 @@ const AddShelfModal = () => {
 
   const handleClose = () => {
     dispatch(modalActions.setState({ addShelfIsOpen: false }));
+    setShelfName('');
   };
 
   const onChangeShelfName = e => {
@@ -27,6 +27,7 @@ const AddShelfModal = () => {
 
   const handleAddShelf = async () => {
     dispatch(shelfActions.addShelf(shelfName));
+    setShelfName('');
   };
 
   return (
@@ -35,7 +36,9 @@ const AddShelfModal = () => {
       onClose={handleClose}
       aria-labelledby="서재 추가하기"
     >
-      <DialogTitle id="form-dialog-title">서재 추가하기</DialogTitle>
+      <DialogTitle className="modal" id="form-dialog-title">
+        서재 추가하기
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus

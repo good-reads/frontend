@@ -14,9 +14,12 @@ const ADD_NEW_BOOK = 'book/ADD_NEW_BOOK';
 const ADD_NEW_BOOK_SUCCESS = 'book/ADD_NEW_BOOK_SUCCESS';
 const ADD_NEW_BOOK_FAILURE = 'book/ADD_NEW_BOOK_FAILURE';
 
+const SET_ERROR_MESSAGE = 'book/SET_ERROR_MESSAGE';
+
 // action cretor (sync)
 export const bookActions = {
   addNewBook: createAction(ADD_NEW_BOOK),
+  setErrorMessage: createAction(SET_ERROR_MESSAGE),
 };
 
 // saga
@@ -30,6 +33,7 @@ function* addNewBookSaga(action) {
     isbn,
     description,
     publisher,
+    cb,
   } = action.payload;
   try {
     const formData = new FormData();
@@ -43,8 +47,11 @@ function* addNewBookSaga(action) {
     yield call(bookApi.addNewBook, authorization, formData);
     yield put({ type: ADD_NEW_BOOK_SUCCESS });
     yield put(modalActions.setState({ addNewBookIsOpen: false }));
+    alert('책이 추가되었습니다');
+    cb();
   } catch (error) {
-    yield put({ type: ADD_NEW_BOOK_FAILURE, error: error.response });
+    const { data } = error.response;
+    yield put({ type: ADD_NEW_BOOK_FAILURE, payload: data.isbn[0] });
   }
 }
 
@@ -56,6 +63,10 @@ export function* bookSaga(action) {
 const bookReducer = handleActions(
   {
     [ADD_NEW_BOOK_FAILURE]: (prevState, action) => ({
+      ...prevState,
+      error: action.payload,
+    }),
+    [SET_ERROR_MESSAGE]: (prevState, action) => ({
       ...prevState,
       error: action.payload,
     }),

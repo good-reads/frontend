@@ -42,7 +42,9 @@ const SignUpModal = ({ open, handleClose, signUp }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="로그인">
-      <DialogTitle id="form-dialog-title">회원가입</DialogTitle>
+      <DialogTitle className="modal" id="form-dialog-title">
+        회원가입
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus

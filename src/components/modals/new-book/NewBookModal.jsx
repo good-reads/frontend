@@ -8,9 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { bookActions } from '../../../modules/book';
+import * as Icons from '../../icons/Icons';
 
 const NewBookModal = ({ handleClose }) => {
   const dispatch = useDispatch();
+  const { error } = useSelector(({ book }) => book);
   const { addNewBookIsOpen } = useSelector(({ modal }) => modal);
   const [src, setSrc] = useState('');
   const [bookData, setBookData] = useState({
@@ -52,6 +54,24 @@ const NewBookModal = ({ handleClose }) => {
     }
   };
 
+  const clearAll = () => {
+    setBookData({
+      title: '',
+      author: '',
+      cover: '',
+      pubdate: '',
+      isbn: '',
+      description: '',
+      publisher: '',
+    });
+    setSrc('');
+  };
+
+  const closeModal = () => {
+    clearAll();
+    handleClose();
+  };
+
   const handleAddNewBook = () => {
     let isValid = true;
     const { isbn } = bookData;
@@ -67,104 +87,122 @@ const NewBookModal = ({ handleClose }) => {
 
     // 책 제목/작가/출판사/날짜/설명 은 비면 안됨
     if (isValid) {
-      dispatch(bookActions.addNewBook(bookData));
+      dispatch(
+        bookActions.addNewBook({
+          ...bookData,
+          cb: clearAll,
+        })
+      );
     } else {
-      console.log('입력하지 않은 정보가 있어 안됩니다');
+      alert('모든 정보를 올바르게 입력해주세요');
     }
   };
 
   return (
-    <div>
-      <Dialog
-        open={addNewBookIsOpen}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">책 추가하기</DialogTitle>
-        <DialogContent>
-          <img alt="img" src={src}></img>
-          <label htmlFor="book-thumbnail">📷</label>
-          <input
-            onChange={changeImage}
-            id="book-thumbnail"
-            type="file"
-            accept=".jpg,.png"
-          />
+    <Dialog
+      open={addNewBookIsOpen}
+      onClose={closeModal}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle className="modal" id="form-dialog-title">
+        책 추가하기
+      </DialogTitle>
+      <DialogContent>
+        <div className="new-book-modal__upload-image">
+          <div className="new-book-modal__inner">
+            {src === '' ? (
+              <img className="upload-image__image" />
+            ) : (
+              <img className="upload-image__image" src={src} />
+            )}
 
-          <TextField
-            autoFocus
-            margin="dense"
-            label="ISBN"
-            type="text"
-            name="isbn"
-            fullWidth
-            value={bookData.isbn}
-            onChange={onChangeBookData}
-            inputProps={{
-              maxLength: 13,
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            label="책 제목"
-            type="text"
-            name="title"
-            fullWidth
-            value={bookData.title}
-            onChange={onChangeBookData}
-          />
+            <label className="upload-image__upload" htmlFor="book-thumbnail">
+              <Icons.ImageIcon />
+            </label>
+            <input
+              hidden
+              onChange={changeImage}
+              id="book-thumbnail"
+              type="file"
+              accept=".jpg,.png"
+            />
+          </div>
+        </div>
 
-          <TextField
-            autoFocus
-            margin="dense"
-            label="작가"
-            type="text"
-            name="author"
-            fullWidth
-            value={bookData.author}
-            onChange={onChangeBookData}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            label="출판사"
-            type="text"
-            name="publisher"
-            fullWidth
-            value={bookData.publisher}
-            onChange={onChangeBookData}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            type="date"
-            name="pubdate"
-            fullWidth
-            value={bookData.pubdate}
-            onChange={onChangeBookData}
-            defaultValue="2020-04-06"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            label="간단한 설명"
-            rows={4}
-            type="text"
-            name="description"
-            multiline
-            fullWidth
-            value={bookData.description}
-            onChange={onChangeBookData}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAddNewBook} color="primary">
-            책 추가하기
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        <TextField
+          autoFocus
+          margin="dense"
+          label="ISBN"
+          type="text"
+          name="isbn"
+          fullWidth
+          value={bookData.isbn}
+          onChange={onChangeBookData}
+          inputProps={{
+            maxLength: 13,
+          }}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          label="책 제목"
+          type="text"
+          name="title"
+          fullWidth
+          value={bookData.title}
+          onChange={onChangeBookData}
+        />
+
+        <TextField
+          autoFocus
+          margin="dense"
+          label="작가"
+          type="text"
+          name="author"
+          fullWidth
+          value={bookData.author}
+          onChange={onChangeBookData}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          label="출판사"
+          type="text"
+          name="publisher"
+          fullWidth
+          value={bookData.publisher}
+          onChange={onChangeBookData}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          type="date"
+          name="pubdate"
+          fullWidth
+          value={bookData.pubdate}
+          onChange={onChangeBookData}
+          defaultValue="2020-04-06"
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          label="간단한 설명"
+          rows={4}
+          type="text"
+          name="description"
+          multiline
+          fullWidth
+          value={bookData.description}
+          onChange={onChangeBookData}
+        />
+        <span>{error}</span>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleAddNewBook} color="primary">
+          책 추가하기
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
