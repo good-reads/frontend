@@ -56,3 +56,7 @@ export const BookIcon = () => {
 export const ListIcon = () => {
   return <FontAwesomeIcon icon={['fas', 'list-ul']} />;
 };
+
+export const ImageIcon = () => {
+  return <FontAwesomeIcon icon={['fas', 'image']} />;
+};

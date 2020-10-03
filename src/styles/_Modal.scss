@@ -1,3 +1,41 @@
+@import '_colors';
+@import '_aligns';
+
 .modal {
   width: 90vw;
+}
+
+.new-book-modal__upload-image {
+  @include center-row();
+}
+
+.new-book-modal__inner {
+  position: relative;
+  display: inline-block;
+
+  .upload-image__image {
+    height: 6rem;
+    width: auto;
+
+    border-radius: 4px;
+    border: none;
+    background: none;
+    box-shadow: 0px 0px 5px $deep-dark-brown;
+  }
+
+  .upload-image__upload {
+    position: absolute;
+    bottom: 0;
+    right: -0.5rem;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+    @include center-col-row();
+    @include button-color--default(white, $deep-dark-brown);
+
+    &:hover {
+      @include button-color--hover($deep-dark-brown, white);
+    }
+  }
 }

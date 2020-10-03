@@ -14,9 +14,12 @@ const ADD_NEW_BOOK = 'book/ADD_NEW_BOOK';
 const ADD_NEW_BOOK_SUCCESS = 'book/ADD_NEW_BOOK_SUCCESS';
 const ADD_NEW_BOOK_FAILURE = 'book/ADD_NEW_BOOK_FAILURE';
 
+const SET_ERROR_MESSAGE = 'book/SET_ERROR_MESSAGE';
+
 // action cretor (sync)
 export const bookActions = {
   addNewBook: createAction(ADD_NEW_BOOK),
+  setErrorMessage: createAction(SET_ERROR_MESSAGE),
 };
 
 // saga
@@ -56,6 +59,10 @@ export function* bookSaga(action) {
 const bookReducer = handleActions(
   {
     [ADD_NEW_BOOK_FAILURE]: (prevState, action) => ({
+      ...prevState,
+      error: action.payload,
+    }),
+    [SET_ERROR_MESSAGE]: (prevState, action) => ({
       ...prevState,
       error: action.payload,
     }),
