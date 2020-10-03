@@ -32,7 +32,7 @@
     @include center-row();
 
     flex-wrap: wrap;
-    .shelf {
+    .shelf__item {
       background: none;
       padding: 0.5rem 1rem;
       margin: 0.5rem;

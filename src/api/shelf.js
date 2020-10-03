@@ -42,3 +42,16 @@ export const removeBookFromShelf = async (authorization, list_id, isbn) =>
       Authorization: `Token ${authorization}`,
     },
   });
+
+export const removeShelf = async (authorization, list_id) =>
+  await axios({
+    url: `${BASE_URL}/accounts/list/delete/`,
+    method: 'DELETE',
+    data: {
+      authorization,
+      list_id,
+    },
+    headers: {
+      Authorization: `Token ${authorization}`,
+    },
+  });

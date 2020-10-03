@@ -1,7 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { shelfActions } from '../../../../modules/shelf';
+import * as Icons from '../../../icons/Icons';
+
 const Shelf = ({ info, history }) => {
+  const dispatch = useDispatch();
   const { id, owner_id, list_name, booklist } = info;
   const showDetails = () => {
     history.push({
@@ -10,10 +15,19 @@ const Shelf = ({ info, history }) => {
     });
     localStorage.setItem('list_id', id);
   };
+
+  const removeShelf = async () => {
+    dispatch(shelfActions.removeShelf({ list_id: id }));
+  };
   return (
-    <button className="shelf" onClick={showDetails}>
-      # {list_name}
-    </button>
+    <div className="shelf">
+      <button className="shelf__item" onClick={showDetails}>
+        # {list_name}
+      </button>
+      <button onClick={removeShelf} className="shelf__remove">
+        <Icons.CloseIcon />
+      </button>
+    </div>
   );
 };
 

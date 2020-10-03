@@ -26,6 +26,7 @@ import './styles/_DetailPage.scss';
 import './styles/_ListPage.scss';
 import './styles/_Review.scss';
 import './styles/_Fab.scss';
+import './styles/_Shelf.scss';
 
 const App = () => {
   const dispatch = useDispatch();
