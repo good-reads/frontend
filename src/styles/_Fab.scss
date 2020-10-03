@@ -1,0 +1,48 @@
+@import '_colors';
+
+.float-button {
+  .float-button__parent {
+    position: absolute;
+    bottom: -1rem;
+    right: 2.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background: white;
+    border: none;
+    @include button-color--default(white, $deep-dark-brown);
+
+    &:hover {
+      @include button-color--hover($deep-dark-brown, white);
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .float-button__child {
+    position: absolute;
+    right: 2.5rem;
+    bottom: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: none;
+    @include button-color--default(white, $dark-brown);
+
+    &:hover {
+      @include button-color--hover($dark-brown, white);
+    }
+    &:focus {
+      outline: 0;
+    }
+
+    &.float-button__new-book {
+      bottom: 2.5rem;
+    }
+    &.float-button__new-list {
+      bottom: 6rem;
+    }
+  }
+}
