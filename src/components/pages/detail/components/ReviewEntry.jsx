@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import * as Icons from '../../../icons/Icons';
 
-const ReviewEntry = ({ review, isbn }) => {
+const ReviewEntry = ({ review, isbn, handleRemoveReview }) => {
   const token = localStorage.getItem('authorization');
 
   const BASE_URL =
@@ -34,7 +34,8 @@ const ReviewEntry = ({ review, isbn }) => {
         },
       });
 
-      setInfo({ id: '', content: '', user: '' });
+      handleRemoveReview(review);
+
     } catch (error) {
       console.log(error.response);
     }

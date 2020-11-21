@@ -19,7 +19,7 @@ const Rate = ({ rate }) => {
   }
   return (
     <>
-      {ret.map(item => (item ? <Icons.StarIcon /> : <Icons.StarBorderIcon />))}
+      {ret.map((item, idx) => (item ? <Icons.StarIcon key={idx} /> : <Icons.StarBorderIcon key={idx} />))}
     </>
   );
 };
@@ -106,6 +106,14 @@ const BookDetail = ({ info }) => {
     // eslint-disable-next-line no-use-before-define
   }, [isbn, updateLikeStars]);
 
+  const removeReview = (review) => {
+    const newReviews = detail.reviews.filter((rv) => rv.id !== review.id)
+    setDetail({
+      ...detail,
+      reviews: newReviews
+    })
+  }
+
   useEffect(() => {
     getBookData();
   }, [getBookData]);
@@ -138,8 +146,6 @@ const BookDetail = ({ info }) => {
         headers: { Authorization: `Token ${token}` },
       }
     );
-
-    console.log(result);
   };
 
   const handleReview = async e => {
@@ -176,11 +182,19 @@ const BookDetail = ({ info }) => {
           </span>
           <span className="info__item info__publisher">{detail.publisher}</span>
           <span className="info__item info__pubdate">{detail.pubdate}</span>
-          {detail.rate && (
-            <span className="info__item info__rate">
-              <Rate rate={detail.rate} /> ({detail.rate})
-            </span>
-          )}
+
+          <span className="info__item info__rate">
+          {
+            detail.rate === 0 ? 
+              ("아직 평점이 없습니다") :
+              (
+                <>
+                  <Rate rate={detail.rate} /> ({detail.rate})
+                </>
+              )
+          }
+          </span>
+
         </div>
       </div>
       <div className="book-detail__inner-sub">
@@ -194,9 +208,9 @@ const BookDetail = ({ info }) => {
         <div className="review__stars">
           {likeStars.map((star, idx) =>
             star ? (
-              <Icons.StarIcon onClick={() => submitRate(idx)} />
+              <Icons.StarIcon key={idx} onClick={() => submitRate(idx)} />
             ) : (
-              <Icons.StarBorderIcon onClick={() => submitRate(idx)} />
+              <Icons.StarBorderIcon key={idx} onClick={() => submitRate(idx)} />
             )
           )}
         </div>
@@ -215,8 +229,8 @@ const BookDetail = ({ info }) => {
           </form>
         </div>
         <ul>
-          {detail.reviews.map(review => (
-            <ReviewEntry key={review.id} review={review} isbn={isbn} />
+          {detail.reviews.map((review, idx) => (
+            <ReviewEntry key={idx} handleRemoveReview={removeReview} key={review.id} review={review} isbn={isbn} />
           ))}
         </ul>
       </div>
