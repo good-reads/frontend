@@ -7,7 +7,7 @@
 ![image](https://user-images.githubusercontent.com/42943992/99875952-d054b300-2c36-11eb-8358-893c5eb63e5a.png)
 
 ## 배포 주소
-- bit.ly/3iongxk
+- https://bit.ly/3iOngxk
 
 ## 팀원 소개
 * Front-end
