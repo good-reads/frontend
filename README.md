@@ -6,7 +6,7 @@
 * Front-end
    - 이 상 아 ([@snaag](https://github.com/snaag))
 * Back-end
-   - 김 주 완 ([@kjw](https://github.com/kjw217))
+   - 김 주 완 ([@kjw217](https://github.com/kjw217))
 
 ## 기능
 ### 유저와 관련된 기능
